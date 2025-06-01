@@ -3,11 +3,11 @@
 // LOGGING MACROS
 #include "utilities/Log.h"
 
-#define AC_LOG(logFormat, ...)			Log::GetInstance()->Print(Log::Type::LOG, logFormat, __VA_ARGS__)
-#define AC_NOTICE(logFormat, ...)		Log::GetInstance()->Print(Log::Type::HIGHLIGHT, logFormat, __VA_ARGS__)
-#define AC_WARN(logFormat, ...)			Log::GetInstance()->Print(Log::Type::WARNING, logFormat, __VA_ARGS__)
-#define AC_SUCCESS(logFormat, ...)		Log::GetInstance()->Print(Log::Type::SUCCESS, logFormat, __VA_ARGS__)
-#define AC_ERROR(logFormat, ...)		Log::GetInstance()->Print(Log::Type::ERROR, logFormat, __VA_ARGS__)
+#define AC_LOG(logFormat, ...)			Log::GetInstance()->Print(Log::Type::LOG, logFormat, ##__VA_ARGS__)
+#define AC_NOTICE(logFormat, ...)		Log::GetInstance()->Print(Log::Type::HIGHLIGHT, logFormat, ##__VA_ARGS__)
+#define AC_WARN(logFormat, ...)			Log::GetInstance()->Print(Log::Type::WARNING, logFormat, ##__VA_ARGS__)
+#define AC_SUCCESS(logFormat, ...)		Log::GetInstance()->Print(Log::Type::SUCCESS, logFormat, ##__VA_ARGS__)
+#define AC_ERROR(logFormat, ...)		Log::GetInstance()->Print(Log::Type::ERROR, logFormat, ##__VA_ARGS__)
 
 // GLOBALS 
 #define WINDOW_WIDTH 800
