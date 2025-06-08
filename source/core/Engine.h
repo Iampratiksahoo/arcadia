@@ -1,4 +1,4 @@
-class Game
+class Engine
 {
     public: 
         enum class State
@@ -9,16 +9,18 @@ class Game
             Win,
         };
 
-        Game();
-        ~Game();
+        Engine(class IGame& game);
+        ~Engine();
 
     protected:
-        void Init();
-        void ProcessInput(float deltaTime);
-        void Update(float deltaTime);
-        void Render();
+        void ClearScreen();
 
     private:
+        static void framebufferSizeCallback(struct GLFWwindow* window, int width, int height);
+        static void keyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods);
+
+    private:
+        class IGame& m_game;
         struct GLFWwindow* m_window;
 
         int m_width;

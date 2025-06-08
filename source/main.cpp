@@ -1,7 +1,9 @@
-#include "core/Game.h"
+#include "core/Engine.h"
+#include "game/Breakout.h"
 
 int main ( void ) 
 {
-    Game game;
+    IGame *game = new  Breakout();
+    Engine engine { *game };
     return 0;
 }
