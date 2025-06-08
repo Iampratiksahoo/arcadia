@@ -11,16 +11,18 @@ class Shader
 {
 public:
     // the program ID
-    unsigned int ID;
+    unsigned int Id;
 
 public:
-    // constructor reads and builds the shader
-    Shader(const char* vertexPath, const char* fragmentPath);
+    /// <summary>
+    /// Compiles the shader from the given vertex and fragment shader code
+    /// </summary>
+    void Compile(const char *vShaderCode, const char *fShaderCode);
     
     /// <summary>
     /// Activates the shader
     /// </summary>
-    void Use();
+    Shader& Use();
 
     /// <summary>
     /// Sets the boolean parameter for a shader
