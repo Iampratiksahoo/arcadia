@@ -9,7 +9,7 @@ class SpriteRenderer
         void DrawSprite(
             Texture2D& texture, 
             Vector2<float> position, 
-            Vector2<float> size = Vector2<float>(1.0f),
+            Vector2<float> size = Vector2<float>(10.f),
             float rotate = 0.0f, 
             Vector3<float> color = Vector3<float>(1.0f)
         );

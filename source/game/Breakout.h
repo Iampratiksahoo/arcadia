@@ -3,8 +3,9 @@
 class Breakout : public IGame
 {
 public:
-    Breakout() : m_renderer(nullptr) {}
-
+    Breakout();
+    ~Breakout();
+    
     // Initialize the game
     void Init() override;
 
@@ -22,4 +23,7 @@ public:
 
 private:
     class SpriteRenderer* m_renderer;
+
+    int m_width; 
+    int m_height; 
 };

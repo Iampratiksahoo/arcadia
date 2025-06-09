@@ -3,7 +3,7 @@
 
 int main ( void ) 
 {
-    IGame *game = new  Breakout();
+    IGame *game = new Breakout();
     Engine engine { *game };
     return 0;
 }
