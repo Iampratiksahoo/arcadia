@@ -18,3 +18,8 @@ void Input::UpdateKey(int key, int action)
         }
     }
 }
+
+bool Input::IsKeyDown(KeyCode keyCode)
+{
+    return m_keys[static_cast<int>(keyCode)];
+}

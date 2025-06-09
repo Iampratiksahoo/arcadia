@@ -1,4 +1,4 @@
-#include "core/Core.h" 
+#include "engine/Core.h" 
 
 class Breakout : public IGame
 {
@@ -23,6 +23,8 @@ public:
 
 private:
     class SpriteRenderer* m_renderer;
+
+    Vector2<float> m_position; 
 
     int m_width; 
     int m_height; 
