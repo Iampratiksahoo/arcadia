@@ -1,13 +1,8 @@
 #include "Breakout.h"
 
-#include "../core/ResourceManager.h"
-#include "../core/Core.h"
-#include "../core/SpriteRenderer.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <stdexcept>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "core/ResourceManager.h"
+#include "core/Core.h"
+#include "core/SpriteRenderer.h"
 
 Breakout::Breakout() :
     m_renderer(nullptr),
@@ -33,13 +28,18 @@ void Breakout::Init()
     ResourceManager::LoadTexture2D("face" , "resources/sprites/face.png", true);
     
     // configure shaders
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_width), 
-    static_cast<float>(m_height),
-    0.f, -1.0f, 1.0f);
-    
+    Camera2D* camera = new Camera2D(
+        0.0f, 
+        static_cast<float>(m_width), 
+        static_cast<float>(m_height),
+        0.f, 
+        -1.0f, 
+        1.0f
+    );
+
     Shader shader = ResourceManager::GetShader("core");
     shader.Use().SetInt("image", 0);
-    shader.SetMat4("projection", projection);
+    shader.SetMat4("projection", camera->GetProjectionMatrix());
     
     // set render-specific controls
     m_renderer = new SpriteRenderer(shader);

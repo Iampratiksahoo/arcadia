@@ -1,4 +1,4 @@
-#include "../core/IGame.h"
+#include "core/IGame.h"
 
 class Breakout : public IGame
 {

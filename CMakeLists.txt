@@ -8,7 +8,12 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
 # Recursively add all source files in the source directory
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c)
+file(
+    GLOB_RECURSE 
+    SOURCE_FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c
+)
 
 
 add_executable(arcadia 
@@ -16,6 +21,7 @@ add_executable(arcadia
 )
 
 target_include_directories(arcadia PRIVATE external/include)
+include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/source)
 
 target_link_libraries(arcadia
     ${GLFW3_LIBRARY}

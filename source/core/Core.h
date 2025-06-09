@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "Texture2D.h"
 #include "Input.h"
+#include "camera/Camera2D.h"
 
 #define AC_LOG(logFormat, ...)			Log::GetInstance()->Print(Log::Type::LOG,       logFormat, ##__VA_ARGS__)
 #define AC_NOTICE(logFormat, ...)		Log::GetInstance()->Print(Log::Type::HIGHLIGHT, logFormat, ##__VA_ARGS__)
