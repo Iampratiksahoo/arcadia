@@ -1,8 +1,8 @@
 #include "Breakout.h"
 
-#include "core/ResourceManager.h"
-#include "core/Core.h"
-#include "core/SpriteRenderer.h"
+#include "engine/ResourceManager.h"
+#include "engine/Core.h"
+#include "engine/SpriteRenderer.h"
 
 Breakout::Breakout() :
     m_renderer(nullptr),
@@ -24,7 +24,7 @@ Breakout::~Breakout()
 void Breakout::Init()
 {
     // load the resources
-    ResourceManager::LoadShader("core", "shaders/core_vertex.glsl", "shaders/core_fragment.glsl");
+    ResourceManager::LoadShader("core", "shaders/default.vert", "shaders/default.frag");
     ResourceManager::LoadTexture2D("face" , "resources/sprites/face.png", true);
     
     // configure shaders
@@ -68,7 +68,7 @@ void Breakout::Render()
             Vector2<float>(200.f), 
             Vector2<float>(300.f, 400.f), 
             45.f, 
-            Vector3<float>(.0f, 1.0f, .0f)
+            Vector3<float>(1.f)
         );
     }
 }
