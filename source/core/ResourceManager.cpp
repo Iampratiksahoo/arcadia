@@ -12,8 +12,8 @@
 #define ABSOLUTE_RESOURCES_PATH(path) (std::string(PROJECT_PATH) + std::string(path)).c_str()
 
 // Instantiate static variables
-std::map<std::string, Texture2D>    ResourceManager::m_nameToTexture2DMap;
-std::map<std::string, Shader>       ResourceManager::m_nameToShaderMap;
+std::map<const char*, Texture2D>    ResourceManager::m_nameToTexture2DMap;
+std::map<const char*, Shader>       ResourceManager::m_nameToShaderMap;
 
 Shader ResourceManager::LoadShader(const char *name, const char *vShaderFile, const char *fShaderFile)
 {

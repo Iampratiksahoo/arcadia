@@ -1,3 +1,6 @@
+#ifndef ENGINE_H
+#define ENGINE_H
+
 class Engine
 {
     public: 
@@ -33,3 +36,5 @@ class Engine
 
         State m_state;	
 };
+
+#endif // ENGINE_H

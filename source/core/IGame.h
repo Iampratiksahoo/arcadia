@@ -1,3 +1,6 @@
+#ifndef IGAME_H
+#define IGAME_H
+
 class IGame
 {
 public:
@@ -18,3 +21,5 @@ public:
     // Clean up resources
     virtual void Cleanup() = 0;
 };
+
+#endif // IGAME_H

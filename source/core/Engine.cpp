@@ -1,10 +1,6 @@
 #include "Engine.h"
 
 #include "Core.h"
-#include "SpriteRenderer.h"
-#include "Shader.h"
-#include "ResourceManager.h"
-#include "IGame.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

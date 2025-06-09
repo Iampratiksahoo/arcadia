@@ -15,7 +15,6 @@ file(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c
 )
 
-
 add_executable(arcadia 
     ${SOURCE_FILES}
 )

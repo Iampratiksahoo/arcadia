@@ -1,10 +1,10 @@
-#include "SpriteRenderer.h"
+#include "Core.h"
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-SpriteRenderer::SpriteRenderer(Shader &shader) : 
+SpriteRenderer::SpriteRenderer(Shader* shader) : 
     m_shader(shader)
 {
     // initialize (and configure) the quad's VAO (Vertex Array Object)
@@ -14,37 +14,44 @@ SpriteRenderer::SpriteRenderer(Shader &shader) :
 SpriteRenderer::~SpriteRenderer()
 {
     glDeleteVertexArrays(1, &m_quadVAO);
+    
+    // delete the shader if it exists
+    if(m_shader != nullptr)
+    {
+        delete m_shader;
+        m_shader = nullptr;
+    }
 }
 
 void SpriteRenderer::DrawSprite(Texture2D &texture, Vector2<float> position, Vector2<float> size, float rotate, Vector3<float> color)
 {
     // create glm vectors from the engine vectors 
-    glm::vec2 pos = glm::vec2(position.x, position.y);
-    glm::vec2 sz = glm::vec2(size.x, size.y);
-    glm::vec3 col = glm::vec3(color.x, color.y, color.z);
+    glm::vec2 glmPosition = glm::vec2(position.x, position.y);
+    glm::vec2 glmSize = glm::vec2(size.x, size.y);
+    glm::vec3 glmColor = glm::vec3(color.x, color.y, color.z);
 
     // load shader 
-    m_shader.Use();
+    m_shader->Use();
 
     // create a new model
     glm::mat4 model = glm::mat4(1.0f);
 
     // translate the model to the position
-    model = glm::translate(model, glm::vec3(pos, 0.0f));
+    model = glm::translate(model, glm::vec3(glmPosition, 0.0f));
     
     // rotate the model
-    model = glm::translate(model, glm::vec3(0.5f * sz.x, 0.5f * sz.y, 0.0f)); 
+    model = glm::translate(model, glm::vec3(0.5f * glmSize.x, 0.5f * glmSize.y, 0.0f)); 
     model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * sz.x, -0.5f * sz.y, 0.0f)); 
+    model = glm::translate(model, glm::vec3(-0.5f * glmSize.x, -0.5f * glmSize.y, 0.0f)); 
     
     // scale the model
-    model = glm::scale(model, glm::vec3(sz, 1.0f));
+    model = glm::scale(model, glm::vec3(glmSize, 1.0f));
 
     // set the model matrix in the shader
-    m_shader.SetMat4("model", model);
+    m_shader->SetMatrix4("model", model);
 
     // set the color in the shader
-    m_shader.SetVec3("spriteColor", col);
+    m_shader->SetVector3("spriteColor", glmColor);
 
     // bind the texture
     glActiveTexture(GL_TEXTURE0);

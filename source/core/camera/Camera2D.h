@@ -1,3 +1,6 @@
+#ifndef CAMERA2D_H
+#define CAMERA2D_H
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -18,3 +21,5 @@ public:
 private:
     glm::mat4 m_projectionMatrix;
 };
+
+#endif // CAMERA2D_H

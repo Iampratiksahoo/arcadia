@@ -10,7 +10,7 @@ public:
 	{
 		static_assert(std::is_same<T, int>::value
 			|| std::is_same<T, float>::value
-			|| std::is_same<T, double>::value, "Vector2<T>: T must be int, float, or double");
+			|| std::is_same<T, double>::value, "Vector2<T>: T must be int, float or double");
 	}
 
 	const char* ToString() const;

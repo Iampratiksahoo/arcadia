@@ -1,9 +1,11 @@
-#include "Core.h"  
+#ifndef SPRITE_RENDERER_H
+#define SPRITE_RENDERER_H
 
+class Shader;
 class SpriteRenderer
 {
     public: 
-        SpriteRenderer(Shader &shader); 
+        SpriteRenderer(Shader* shader); 
         ~SpriteRenderer();
 
         void DrawSprite(
@@ -18,6 +20,7 @@ class SpriteRenderer
         void initRenderData();
 
     private:
-        Shader m_shader;
+        Shader* m_shader;
         unsigned int m_quadVAO;
 };
+#endif // SPRITE_RENDERER_H

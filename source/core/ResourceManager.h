@@ -1,3 +1,6 @@
+#ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
+
 #include <map>
 
 class Shader;
@@ -22,8 +25,8 @@ public:
 
 private:
     // resource storage
-    static std::map<std::string, Shader>    m_nameToShaderMap;
-    static std::map<std::string, Texture2D> m_nameToTexture2DMap;
+    static std::map<const char*, Shader>    m_nameToShaderMap;
+    static std::map<const char*, Texture2D> m_nameToTexture2DMap;
 
     // private constructor, that is we do not want any actual resource manager objects. Its members and functions should be publicly available (static).
     ResourceManager() { }
@@ -32,3 +35,5 @@ private:
     // loads a single texture from file
     static Texture2D loadTextureFromFile(const char *file, bool alpha);
 };
+
+#endif // RESOURCE_MANAGER_H

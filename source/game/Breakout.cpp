@@ -1,9 +1,5 @@
 #include "Breakout.h"
 
-#include "engine/ResourceManager.h"
-#include "engine/Core.h"
-#include "engine/SpriteRenderer.h"
-
 Breakout::Breakout() :
     m_renderer(nullptr),
     m_width(WINDOW_WIDTH), 
@@ -37,11 +33,11 @@ void Breakout::Init()
         1.0f
     );
 
-    Shader shader = ResourceManager::GetShader("core");
-    shader.Use().SetInt("image", 0);
-    shader.SetMat4("projection", camera->GetProjectionMatrix());
+    Shader *shader = new Shader( ResourceManager::GetShader("core") );
+    shader->Use().SetInteger("image", 0);
+    shader->SetMatrix4("projection", camera->GetProjectionMatrix());
     
-    // set render-specific controls
+    // set render-specific controls]
     m_renderer = new SpriteRenderer(shader);
 }
 
