@@ -126,7 +126,14 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
         // try to load the texture
         try
         {
-            // first we load the image data using stb_image
+            // if alpha is true, we set the internal format to GL_RGBA
+            if( alpha )
+            {
+                texture.InternalFormat = GL_RGBA;
+                texture.ImageFormat = GL_RGBA;
+            }
+
+            // then we load the image data using stb_image
             int width, height, nrChannels;
             unsigned char *data = stbi_load(file, &width, &height, &nrChannels, 0);
 
@@ -135,13 +142,6 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
             {
                 // generate the texture with the loaded data
                 texture.Generate(width, height, data);
-                
-                // if alpha is true, we set the internal format to GL_RGBA
-                if( alpha )
-                {
-                    texture.InternalFormat = GL_RGBA;
-                    texture.ImageFormat = GL_RGBA;
-                }
 
                 // free the image data
                 stbi_image_free(data);
