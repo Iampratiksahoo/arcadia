@@ -6,6 +6,7 @@
 #include "maths/Vector3.h"
 #include "Shader.h"
 #include "Texture2D.h"
+#include "Input.h"
 
 #define AC_LOG(logFormat, ...)			Log::GetInstance()->Print(Log::Type::LOG,       logFormat, ##__VA_ARGS__)
 #define AC_NOTICE(logFormat, ...)		Log::GetInstance()->Print(Log::Type::HIGHLIGHT, logFormat, ##__VA_ARGS__)
@@ -17,7 +18,7 @@
 #define PROJECT_PATH "/Users/pratik/Projects/Misc/arcadia/"
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define WINDOW_ASPECT_RATION ((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT)
+#define WINDOW_ASPECT_RATIO ((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT)
 #define WINDOW_TITLE "Arcadia"
 
 #define OPENGL_VERSION_MAJOR 3

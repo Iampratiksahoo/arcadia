@@ -12,21 +12,16 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+// because we ensure that there is always one single instance of the Engine class, we can use static members
+int Engine::m_width = WINDOW_WIDTH;
+int Engine::m_height = WINDOW_HEIGHT;
+const char* Engine::m_title = WINDOW_TITLE;
+
 Engine::Engine(IGame& game) : 
 m_game(game),
 m_state(State::None), 
-m_window(nullptr),
-m_width(WINDOW_WIDTH), 
-m_height(WINDOW_HEIGHT),
-m_title(WINDOW_TITLE)
+m_window(nullptr)
 {
-    // initialize the glfw and other stuff 
-    // initialize the keys array to false
-    for (int i = 0; i < 1024; i++)
-    {
-        m_keys[i] = false;
-    }
-
     // first initialize GLFW to use OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION_MAJOR);
@@ -136,6 +131,8 @@ void Engine::framebufferSizeCallback(GLFWwindow *window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
+    m_width = width;
+    m_height = height;
 
     // You need to get the Game instance from the window user pointer if you want to update members.
     glViewport(0, 0, width, height);
@@ -145,12 +142,10 @@ void Engine::keyCallback(GLFWwindow *window, int key, int scancode, int action, 
 {
     // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
-    // if (key >= 0 && key < 1024)
-    // {
-    //     if (action == GLFW_PRESS)
-    //         m_keys[key] = true;
-    //     else if (action == GLFW_RELEASE)
-    //         m_keys[key] = false;
-    // }
+    }
+
+    // now record states of each key press 
+    Input::UpdateKey(key, action);
 }
