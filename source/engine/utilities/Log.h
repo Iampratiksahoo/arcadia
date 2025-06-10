@@ -1,3 +1,6 @@
+#ifndef LOG_H
+#define LOG_H
+
 #define AC_LOG(logFormat, ...)			Log::GetInstance()->Print(Log::Type::LOG,       logFormat, ##__VA_ARGS__)
 #define AC_NOTICE(logFormat, ...)		Log::GetInstance()->Print(Log::Type::HIGHLIGHT, logFormat, ##__VA_ARGS__)
 #define AC_WARN(logFormat, ...)			Log::GetInstance()->Print(Log::Type::WARNING,   logFormat, ##__VA_ARGS__)
@@ -22,3 +25,5 @@ public:
 private:
     static Log* m_instance;
 };
+
+#endif

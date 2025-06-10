@@ -2,7 +2,9 @@
 #define GAMEOBJECT_H
 
 #include <assert.h>
+#include "utilities/Log.h"
 #include <type_traits>
+#include <typeinfo>
 #include <vector>
 
 class Transform; 
@@ -17,7 +19,11 @@ public:
     template <typename T>
     bool HasComponent() const
     {
-        assert((std::is_base_of<AbstractComponent, T>::value));
+        if( !std::is_base_of<AbstractComponent, T>::value )
+        {
+            AC_ERROR( "GameObject::Failed To Add component, the component %s is not of type AbstractComponent", typeid(T).name() );
+            return false;
+        }
         
         bool hasComponent = false;
 
@@ -37,7 +43,11 @@ public:
     template <typename T> 
     T* GetComponent()
     {
-        assert(( std::is_base_of<AbstractComponent, T>::value ));
+        if( !std::is_base_of<AbstractComponent, T>::value )
+        {
+            AC_ERROR( "GameObject::Failed To Add component, the component %s is not of type AbstractComponent", typeid(T).name() );
+            return nullptr;
+        }
 
         T* retObject = nullptr;
 
@@ -55,16 +65,53 @@ public:
 
     /// @brief Add's an AbstractBaseComponent to the GameObject 
     template <typename T> 
-    void AddComponent()
+    T* AddComponent()
     {
-        assert(( std::is_base_of<AbstractComponent, T>::value )
-                && HasComponent<T>() );
+        if( !std::is_base_of<AbstractComponent, T>::value )
+        {
+            AC_ERROR( "GameObject::Failed To Add component, the component %s is not of type AbstractComponent", typeid(T).name() );
+            return nullptr;
+        }
+
+        if( HasComponent<T>() )
+        {
+            AC_ERROR("GameObject::Failed To add Component because GameObject already has component type %s", typeid(T).name() );
+            return nullptr; 
+        }
 
         // create the new component
         T* newComponent = new T();
 
         // add to the list of components
         m_components.push_back( newComponent );
+
+        // also return this newComponent 
+        return newComponent; 
+    }
+
+    template <typename T> 
+    void AddComponent(T* component)
+    {
+        if( !std::is_base_of<AbstractComponent, T>::value )
+        {
+            AC_ERROR( "GameObject::Failed To Add component, the component %s is not of type AbstractComponent", typeid(T).name() );
+            return;
+        }
+
+        if( component == nullptr )
+        {
+            AC_ERROR("GameObject::Failed To add Component, because the component was NULL");
+            return; 
+        }
+
+        if( HasComponent<T>() )
+        {
+            AC_ERROR("GameObject::Failed To add Component because GameObject already has component type %s", typeid(T).name() );
+            return; 
+        }
+
+        // add to the list of components
+        m_components.push_back( component );
     }
 #pragma endregion
 
