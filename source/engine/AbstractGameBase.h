@@ -1,11 +1,9 @@
-#ifndef IGAME_H
-#define IGAME_H
+#ifndef ABSTRACTGAMEBASE_H
+#define ABSTRACTGAMEBASE_H
 
-class IGame
+class AbstractGameBase
 {
 public:
-    virtual ~IGame() = default;
-    
     // Initialize the game
     virtual void Init() = 0;
 
@@ -22,4 +20,4 @@ public:
     virtual void Cleanup() = 0;
 };
 
-#endif // IGAME_H
+#endif // ABSTRACTGAMEBASE_H

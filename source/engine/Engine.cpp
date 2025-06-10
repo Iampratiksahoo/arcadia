@@ -13,7 +13,7 @@ int Engine::m_width = WINDOW_WIDTH;
 int Engine::m_height = WINDOW_HEIGHT;
 const char* Engine::m_title = WINDOW_TITLE;
 
-Engine::Engine(IGame& game) : 
+Engine::Engine(AbstractGameBase& game) : 
 m_game(game),
 m_state(State::None), 
 m_window(nullptr)

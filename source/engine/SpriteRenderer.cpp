@@ -1,4 +1,7 @@
-#include "Core.h"
+#include "SpriteRenderer.h"
+#include "Texture2D.h"
+#include "Shader.h"
+#include "engine/utilities/Log.h"
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>

@@ -10,7 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Core.h"
+#include "engine/utilities/Log.h"
 
 Shader::Shader(const Shader &shader)
 {

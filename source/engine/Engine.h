@@ -12,7 +12,7 @@ class Engine
             Win,
         };
 
-        Engine(class IGame& game);
+        Engine(class AbstractGameBase& game);
         ~Engine();
 
     protected:
@@ -23,7 +23,7 @@ class Engine
         static void keyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods);
 
     private:
-        class IGame& m_game;
+        class AbstractGameBase& m_game;
         struct GLFWwindow* m_window;
 
         // these are require to be static 

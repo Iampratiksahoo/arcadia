@@ -1,4 +1,6 @@
 #include "Input.h"
+
+#include "engine/KeyCode.h"
 #include <GLFW/glfw3.h>
 
 // Definition and initialization

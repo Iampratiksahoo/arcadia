@@ -19,8 +19,8 @@ add_executable(arcadia
     ${SOURCE_FILES}
 )
 
-target_include_directories(arcadia PRIVATE external/include)
-include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/source)
+target_include_directories(arcadia PRIVATE external/include ${CMAKE_SOURCE_DIR}/source)
+# include_directories(arcadia PRIVATE ${CMAKE_SOURCE_DIR}/source)
 
 target_link_libraries(arcadia
     ${GLFW3_LIBRARY}

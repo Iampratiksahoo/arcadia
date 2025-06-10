@@ -7,8 +7,11 @@
 #include "../lib/stb.h"
 #include "glad/glad.h"
 
-#include "Core.h"
+#include "engine/utilities/Log.h"
+#include "Texture2D.h"
+#include "Shader.h"
 
+#define PROJECT_PATH "/Users/pratik/Projects/Misc/arcadia/"
 #define ABSOLUTE_RESOURCES_PATH(path) (std::string(PROJECT_PATH) + std::string(path)).c_str()
 
 // Instantiate static variables

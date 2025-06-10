@@ -1,7 +1,11 @@
 #ifndef SPRITE_RENDERER_H
 #define SPRITE_RENDERER_H
 
-class Shader;
+#include "engine/maths/Vector2.h"
+#include "engine/maths/Vector3.h"
+
+class Texture2D;
+class Shader; 
 class SpriteRenderer
 {
     public: 

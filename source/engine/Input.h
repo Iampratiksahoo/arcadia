@@ -1,8 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include "Core.h"
-
+enum class KeyCode;
 class Input
 {
     public: 

@@ -2,7 +2,7 @@
 
 int main ( void ) 
 {
-    IGame *game = new Breakout();
+    AbstractGameBase *game = new Breakout();
     Engine engine { *game };
     return 0;
 }

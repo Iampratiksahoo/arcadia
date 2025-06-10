@@ -1,6 +1,6 @@
 #include "engine/Core.h" 
 
-class Breakout : public IGame
+class Breakout : public AbstractGameBase
 {
 public:
     Breakout();

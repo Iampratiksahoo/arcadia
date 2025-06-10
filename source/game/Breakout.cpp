@@ -20,6 +20,9 @@ Breakout::~Breakout()
 // Initialize the game
 void Breakout::Init()
 {
+    GameObject* gObject = new GameObject();
+    Transform* transform;
+    gObject->GetComponent<Transform>();
 }
 
 // Handle input events
