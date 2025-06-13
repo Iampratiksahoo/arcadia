@@ -1,7 +1,7 @@
 #include "Texture2D.h"
 
 #include <glad/glad.h>
-#include "utilities/Log.h"
+#include "Engine/Util/Log.h"
 
 Texture2D::Texture2D() : 
     width(0), 

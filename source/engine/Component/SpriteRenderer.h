@@ -2,11 +2,11 @@
 #define SPRITE_RENDERER_H
 
 #include "AbstractComponent.h"
-#include "engine/maths/Vector2.h"
-#include "engine/maths/Vector3.h"
+#include "Engine/Math/Vector2.h"
+#include "Engine/Math/Vector3.h"
 
-#include "engine/Texture2D.h"
-#include "engine/Shader.h"
+#include "Engine/Texture2D.h"
+#include "Engine/Shader.h"
 
 class SpriteRenderer : public AbstractComponent
 {

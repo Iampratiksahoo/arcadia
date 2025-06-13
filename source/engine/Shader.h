@@ -1,9 +1,9 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "engine/maths/Vector2.h"
-#include "engine/maths/Vector3.h"
-#include "engine/maths/Vector4.h"
+#include "Engine/Math/Vector2.h"
+#include "Engine/Math/Vector3.h"
+#include "Engine/Math/Vector4.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

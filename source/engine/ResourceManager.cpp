@@ -4,10 +4,10 @@
 #include <sstream>
 #include <fstream>
 
-#include "lib/stb.h"
+#include "Lib/stb.h"
 #include "glad/glad.h"
 
-#include "engine/utilities/Log.h"
+#include "Engine/Util/Log.h"
 #include "Texture2D.h"
 #include "Shader.h"
 

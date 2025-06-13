@@ -1,8 +1,8 @@
 #include "SpriteRenderer.h"
-#include "engine/GameObject.h"
-#include "engine/Texture2D.h"
-#include "engine/Shader.h"
-#include "engine/utilities/Log.h"
+#include "Engine/GameObject.h"
+#include "Engine/Texture2D.h"
+#include "Engine/Shader.h"
+#include "Engine/Util/Log.h"
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>

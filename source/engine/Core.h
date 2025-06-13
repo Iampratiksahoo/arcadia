@@ -4,17 +4,17 @@
 #pragma once
 
 // LOGGING MACROS
-#include "utilities/Log.h"
+#include "Util/Log.h"
 
-#include "maths/Vector2.h"
-#include "maths/Vector3.h"
-#include "maths/Vector4.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Vector4.h"
 
-#include "camera/Camera2D.h"
+#include "Camera/Camera2D.h"
 
-#include "components/AbstractComponent.h"
-#include "components/Transform.h"
-#include "components/SpriteRenderer.h"
+#include "Component/AbstractComponent.h"
+#include "Component/Transform.h"
+#include "Component/SpriteRenderer.h"
 
 #include "Shader.h"
 #include "Texture2D.h"

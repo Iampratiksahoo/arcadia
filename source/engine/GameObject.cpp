@@ -1,8 +1,8 @@
 #include "GameObject.h"
 
-#include "engine/components/Transform.h"
-#include "engine/components/AbstractComponent.h"
-#include "engine/components/SpriteRenderer.h"
+#include "Engine/Component/Transform.h"
+#include "Engine/Component/AbstractComponent.h"
+#include "Engine/Component/SpriteRenderer.h"
 
 GameObject::GameObject()
 {

@@ -2,8 +2,8 @@
 #define TRANSFORM_H
 
 #include "AbstractComponent.h"
-#include "engine/maths/Vector3.h"
-#include "engine/maths/Vector4.h"
+#include "Engine/Math/Vector3.h"
+#include "Engine/Math/Vector4.h"
 
 template <typename T> 
 class Vector3; 
