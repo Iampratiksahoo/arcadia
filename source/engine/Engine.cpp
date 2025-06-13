@@ -81,6 +81,9 @@ m_window(nullptr)
         m_deltaTime = currentFrame - m_lastFrameTime;
         m_lastFrameTime = currentFrame;
 
+        // call the Input class's BeginFrame to track the key states
+        Input::BeginFrame();
+
         // poll glfw window events
         glfwPollEvents();
 

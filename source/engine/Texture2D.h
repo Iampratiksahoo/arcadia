@@ -1,21 +1,25 @@
+#ifndef TEXTURE2D_H
+#define TEXTURE2D_H
 class Texture2D
 {
 public:
-    unsigned int Id; 
+    unsigned int id; 
 
-    unsigned int Width;
-    unsigned int Height;
+    unsigned int width;
+    unsigned int height;
 
-    unsigned int InternalFormat;
-    unsigned int ImageFormat;
+    unsigned int internalFormat;
+    unsigned int imageFormat;
 
-    unsigned int WrapS;
-    unsigned int WrapT;
-    unsigned int FilterMin;
-    unsigned int FilterMax;
+    unsigned int wrapS;
+    unsigned int wrapT;
+    unsigned int filterMin;
+    unsigned int filterMax;
 
     Texture2D();
 
     void Generate(unsigned int width, unsigned int height, unsigned char* data);
     void Bind() const;
 };
+
+#endif

@@ -12,7 +12,7 @@ class Shader
 {
 public:
     // the program ID
-    unsigned int Id;
+    unsigned int id;
 
 public:
     Shader() = default;
@@ -26,7 +26,7 @@ public:
     /// <summary>
     /// Activates the shader
     /// </summary>
-    Shader& Use();
+    Shader* Use();
 
     /// <summary>
     /// Sets the boolean parameter for a shader

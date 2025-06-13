@@ -1,3 +1,6 @@
+#ifndef BREAKOUT_H
+#define BREAKOUT_H
+
 #include "engine/Core.h" 
 
 class Breakout : public AbstractGameBase
@@ -22,10 +25,8 @@ public:
     void Cleanup() override;
 
 private:
-    class SpriteRenderer* m_renderer;
-
-    Vector2<float> m_position; 
-
     int m_width; 
     int m_height; 
 };
+
+#endif

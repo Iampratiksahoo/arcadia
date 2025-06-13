@@ -4,7 +4,7 @@
 #include <sstream>
 #include <fstream>
 
-#include "../lib/stb.h"
+#include "lib/stb.h"
 #include "glad/glad.h"
 
 #include "engine/utilities/Log.h"
@@ -15,39 +15,34 @@
 #define ABSOLUTE_RESOURCES_PATH(path) (std::string(PROJECT_PATH) + std::string(path)).c_str()
 
 // Instantiate static variables
-std::map<const char*, Texture2D>    ResourceManager::m_nameToTexture2DMap;
-std::map<const char*, Shader>       ResourceManager::m_nameToShaderMap;
+std::map<std::string, Texture2D>    ResourceManager::m_nameToTexture2DMap;
+std::map<std::string, Shader>       ResourceManager::m_nameToShaderMap;
 
-Shader ResourceManager::LoadShader(const char *name, const char *vShaderFile, const char *fShaderFile)
+Shader& ResourceManager::LoadShader(std::string name, const char *vShaderFile, const char *fShaderFile)
 {
-    // load the shader from file
-    Shader shader = loadShaderFromFile( ABSOLUTE_RESOURCES_PATH( vShaderFile ), ABSOLUTE_RESOURCES_PATH( fShaderFile ));
-
     // if we have a valid shader, store it in the map
-    m_nameToShaderMap[name] = shader;
+    m_nameToShaderMap[name] = loadShaderFromFile( ABSOLUTE_RESOURCES_PATH( vShaderFile ), ABSOLUTE_RESOURCES_PATH( fShaderFile ));
 
     // return to caller 
-    return shader;
+    return GetShader( name );
 }
 
-Shader ResourceManager::GetShader(const char *name)
+Shader& ResourceManager::GetShader(std::string name)
 {
     return m_nameToShaderMap[name];
 }
 
-Texture2D ResourceManager::LoadTexture2D(const char *name, const char *tFileName, bool alpha)
+Texture2D& ResourceManager::LoadTexture2D(std::string name, const char *tFileName, bool alpha)
 {
-    // load the texture from file
-    Texture2D texture = loadTextureFromFile( ABSOLUTE_RESOURCES_PATH( tFileName ), alpha);
-
     // if we have a valid texture, store it in the map
-    m_nameToTexture2DMap[name] = texture;
+    // m_nameToTexture2DMap[name] = loadTextureFromFile( ABSOLUTE_RESOURCES_PATH( tFileName ), alpha);
+    m_nameToTexture2DMap.emplace(name, loadTextureFromFile( ABSOLUTE_RESOURCES_PATH( tFileName ), alpha));
 
     // return to caller
-    return texture;
+    return GetTexture2D( name );
 }
 
-Texture2D ResourceManager::GetTexture2D(const char *name)
+Texture2D& ResourceManager::GetTexture2D(std::string name)
 {
     return m_nameToTexture2DMap[name];
 }
@@ -57,7 +52,7 @@ void ResourceManager::Clear()
     // delete all the loaded shaders
     for (auto &shaderPair : m_nameToShaderMap)
     {
-        glDeleteProgram(shaderPair.second.Id);
+        glDeleteProgram(shaderPair.second.id);
     }
    
     // finally clear the shader map
@@ -66,7 +61,7 @@ void ResourceManager::Clear()
     // delete all the loaded textures
     for (auto &texturePair : m_nameToTexture2DMap)
     {
-        glDeleteTextures(1, &texturePair.second.Id);
+        glDeleteTextures(1, &texturePair.second.id);
     }
 
     // finally clear the Texture map
@@ -122,7 +117,7 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *
 Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
 {
     // return object
-    Texture2D texture = Texture2D();
+    Texture2D texture;
 
     if(file != nullptr)
     {
@@ -132,8 +127,8 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
             // if alpha is true, we set the internal format to GL_RGBA
             if( alpha )
             {
-                texture.InternalFormat = GL_RGBA;
-                texture.ImageFormat = GL_RGBA;
+                texture.internalFormat = GL_RGBA;
+                texture.imageFormat = GL_RGBA;
             }
 
             // then we load the image data using stb_image
@@ -143,6 +138,8 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
             // if we have a valid data
             if(data)
             {
+                AC_NOTICE("Adding Data To Texture with Id: %d", texture.id);
+
                 // generate the texture with the loaded data
                 texture.Generate(width, height, data);
 
