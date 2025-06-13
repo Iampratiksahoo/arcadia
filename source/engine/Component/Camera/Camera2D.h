@@ -1,10 +1,12 @@
 #ifndef CAMERA2D_H
 #define CAMERA2D_H
 
+#include "Engine/Component/AbstractComponent.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class Camera2D
+class Camera2D : public AbstractComponent
 {
 public:
     Camera2D(
@@ -15,6 +17,8 @@ public:
         float zNear = 0.1f, 
         float zFar = 100.0f
     );
+
+    void Reset() override;
 
     glm::mat4 GetProjectionMatrix() const;
 

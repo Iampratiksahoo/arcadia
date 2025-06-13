@@ -10,7 +10,7 @@
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
 
-#include "Camera/Camera2D.h"
+#include "Component/Camera/Camera2D.h"
 
 #include "Component/AbstractComponent.h"
 #include "Component/Transform.h"
