@@ -30,6 +30,38 @@ public:
         return result.c_str();
     }
 
+    /// @brief Returns the Magnitude/Length of the vector 
+    float Magnitude() const
+    {
+        return std::sqrt( x*x + y*y + z*z );
+    }
+
+    /// @brief Normalizes this Vector
+    void Normalize() 
+    {
+        *this = GetNormalized();
+    }
+
+    /// @brief Returns the Normalized version of this Vector 
+    Vector3<T> GetNormalized() const
+    {
+        // initialize it to zero first
+        Vector3<T> normalized = Vector3<T>::Zero; 
+
+        // get the magnitude
+        float magnitude = Magnitude(); 
+
+        // handle division by zero 
+        if( magnitude != 0)
+        {
+            normalized = Vector3<T>( x/magnitude, y/magnitude, z/magnitude );
+        }
+
+        // return to caller 
+        return normalized;
+    }
+
+
     template <typename U>
     Vector3<T> operator*(const U& v)
     {
@@ -90,6 +122,18 @@ public:
         y -= vec.y;
         z -= vec.z;
         return *this;
+    }
+
+    bool operator==(const Vector3<T>& vec) const
+    {
+        return x == vec.x
+                && y == vec.y
+                && z == vec.z;
+    }
+
+    bool operator!=(const Vector3<T>& vec) const
+    {
+        return !(*this == vec);
     }
 #pragma region STATICS
     static const Vector3<T> Zero;

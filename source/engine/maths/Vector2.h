@@ -31,6 +31,37 @@ public:
         return result.c_str();
     }
 
+    /// @brief Returns the Magnitude/Length of the vector 
+    float Magnitude() const
+    {
+        return std::sqrt( x*x + y*y );
+    }
+
+    /// @brief Normalizes this Vector
+    void Normalize() 
+    {
+        *this = GetNormalized();
+    }
+
+    /// @brief Returns the Normalized version of this Vector 
+    Vector2<T> GetNormalized() const
+    {
+        // initialize it to zero first
+        Vector2<T> normalized = Vector2<T>::Zero; 
+
+        // get the magnitude
+        float magnitude = Magnitude(); 
+
+        // handle division by zero 
+        if( magnitude != 0)
+        {
+            normalized = Vector2<T>( x/magnitude, y/magnitude );
+        }
+
+        // return to caller 
+        return normalized;
+    }
+
     template <typename U>
     Vector2<T> operator*(const U& v)
     {
@@ -89,6 +120,17 @@ public:
         x -= vec.x;
         y -= vec.y;
         return *this;
+    }
+
+    bool operator==(const Vector2<T>& vec) const
+    {
+        return x == vec.x
+                && y == vec.y;
+    }
+
+    bool operator!=(const Vector2<T>& vec) const
+    {
+        return !(*this == vec);
     }
 #pragma region STATICS
     static const Vector2<T> Zero;
