@@ -16,12 +16,12 @@ class Transform : public AbstractComponent
 public: 
     Transform();
     void Reset() override;
-    void SetPositionAndRotation(Vector3<float> newPosition, Vector4<float> newRotation);
+    void SetPositionAndRotation(Vector3<float> newPosition, Vector3<float> newRotation);
     void Translate(Vector3<float> translation);
 
 public:
     Vector3<float> position;
-    Vector4<float> rotation; 
+    Vector3<float> rotation; 
     Vector3<float> scale; 
 };
 

@@ -1,18 +1,22 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <assert.h>
 #include "utilities/Log.h"
+
+#include <assert.h>
 #include <type_traits>
 #include <typeinfo>
 #include <vector>
 
-class Transform; 
-class AbstractComponent;
+#include "components/AbstractComponent.h"
+#include "components/Transform.h"
+
 class GameObject
 {
 public:
     GameObject();
+
+    virtual void Draw();
 
 #pragma region TEMPLATES
     /// @brief True's if AbstractBaseComponent attached on the GameObject 
@@ -80,13 +84,13 @@ public:
         }
 
         // create the new component
-        T* newComponent = new T();
+        T* component = new T();
 
-        // add to the list of components
-        m_components.push_back( newComponent );
+        // add the component to the list of components 
+        addComponentImpl( component );
 
         // also return this newComponent 
-        return newComponent; 
+        return component; 
     }
 
     template <typename T> 
@@ -110,10 +114,13 @@ public:
             return; 
         }
 
-        // add to the list of components
-        m_components.push_back( component );
+        // add the component to the list of components 
+        addComponentImpl( component );
     }
 #pragma endregion
+
+private: 
+    void addComponentImpl( AbstractComponent* component );
 
 public: 
     Transform* transform; 

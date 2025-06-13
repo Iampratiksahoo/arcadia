@@ -14,10 +14,10 @@
 
 #include "components/AbstractComponent.h"
 #include "components/Transform.h"
+#include "components/SpriteRenderer.h"
 
 #include "Shader.h"
 #include "Texture2D.h"
-#include "SpriteRenderer.h"
 #include "KeyCode.h"
 #include "Input.h"
 #include "ResourceManager.h"

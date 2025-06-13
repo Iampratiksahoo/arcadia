@@ -2,7 +2,7 @@
 
 Transform::Transform(): 
     position(Vector3<float>::Zero),
-    rotation(Vector4<float>::Zero),
+    rotation(Vector3<float>::Zero),
     scale(Vector3<float>::Zero)
 {
 }
@@ -10,11 +10,11 @@ Transform::Transform():
 void Transform::Reset()
 {
     position = Vector3<float>::Zero;
-    rotation = Vector4<float>::Zero;
+    rotation = Vector3<float>::Zero;
     scale    = Vector3<float>::Zero;
 }
 
-void Transform::SetPositionAndRotation(Vector3<float> newPosition, Vector4<float> newRotation)
+void Transform::SetPositionAndRotation(Vector3<float> newPosition, Vector3<float> newRotation)
 {
     position = newPosition; 
     rotation = newRotation;
