@@ -1,6 +1,7 @@
 #include "Input.h"
 
 #include <GLFW/glfw3.h>
+#include "KeyCode.h"
 
 // Definition and initialization
 bool Input::m_keyLastState[1024] = { false };

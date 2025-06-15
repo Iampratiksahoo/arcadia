@@ -5,8 +5,8 @@
 #include "Engine/Math/Vector2.h"
 #include "Engine/Math/Vector3.h"
 
-#include "Engine/Texture2D.h"
-#include "Engine/Shader.h"
+#include "Engine/Core/Texture2D.h"
+#include "Engine/Core/Shader.h"
 
 class SpriteRenderer : public AbstractComponent
 {

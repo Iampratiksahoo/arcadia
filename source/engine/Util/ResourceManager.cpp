@@ -8,8 +8,8 @@
 #include "glad/glad.h"
 
 #include "Engine/Util/Log.h"
-#include "Texture2D.h"
-#include "Shader.h"
+#include "Engine/Core/Texture2D.h"
+#include "Engine/Core/Shader.h"
 
 #define PROJECT_PATH "/Users/pratik/Projects/Misc/arcadia/"
 #define ABSOLUTE_RESOURCES_PATH(path) (std::string(PROJECT_PATH) + std::string(path)).c_str()

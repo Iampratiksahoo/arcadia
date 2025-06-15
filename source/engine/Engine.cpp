@@ -8,6 +8,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+#define WINDOW_ASPECT_RATIO ((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT)
+#define WINDOW_TITLE "Arcadia"
+
+#define OPENGL_VERSION_MAJOR 3
+#define OPENGL_VERSION_MINOR 3
+
 // because we ensure that there is always one single instance of the Engine class, we can use static members
 int Engine::m_width = WINDOW_WIDTH;
 int Engine::m_height = WINDOW_HEIGHT;
@@ -26,7 +34,7 @@ m_window(nullptr)
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    glfwWindowHint(GLFW_RESIZABLE, false);
+    // glfwWindowHint(GLFW_RESIZABLE, false);
 
     try
     {

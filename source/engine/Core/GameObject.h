@@ -1,15 +1,15 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include "Util/Log.h"
+#include "Engine/Util/Log.h"
 
 #include <assert.h>
 #include <type_traits>
 #include <typeinfo>
 #include <vector>
 
-#include "Component/AbstractComponent.h"
-#include "Component/Transform.h"
+#include "Engine/Component/AbstractComponent.h"
+#include "Engine/Component/Transform.h"
 
 class GameObject
 {

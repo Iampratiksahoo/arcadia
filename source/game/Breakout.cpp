@@ -1,8 +1,8 @@
 #include "Breakout.h"
 
 Breakout::Breakout() :
-    m_width(WINDOW_WIDTH), 
-    m_height(WINDOW_HEIGHT)
+    m_width(Engine::GetWidth()), 
+    m_height(Engine::GetHeight())
 {
 
 }
@@ -19,7 +19,6 @@ void Breakout::Init()
 // Handle input events
 void Breakout::ProcessInput(float deltaTime)
 {
-
 }
 
 // Update the game state

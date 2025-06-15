@@ -15,6 +15,9 @@ class Engine
         Engine(class AbstractGameBase& game);
         ~Engine();
 
+        inline static const int GetWidth() { return m_width; }
+        inline static const int GetHeight() { return m_height; }
+        
     protected:
         void ClearScreen();
 
