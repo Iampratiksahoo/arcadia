@@ -7,6 +7,7 @@
 #include <type_traits>
 #include <typeinfo>
 #include <vector>
+#include <string> 
 
 #include "Engine/Component/AbstractComponent.h"
 #include "Engine/Component/Transform.h"
@@ -117,6 +118,8 @@ public:
         // add the component to the list of components 
         addComponentImpl( component );
     }
+
+    inline const std::string& GetUuid() const { return m_uuid; }
 #pragma endregion
 
 private: 
@@ -126,6 +129,7 @@ public:
     Transform* transform; 
 
 private:
+    std::string m_uuid; 
     std::vector<AbstractComponent*> m_components;
 };
 

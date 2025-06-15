@@ -4,7 +4,10 @@
 #include "Engine/Component/AbstractComponent.h"
 #include "Engine/Component/SpriteRenderer.h"
 
-GameObject::GameObject()
+#include "Engine/Util/UUID.h"
+
+GameObject::GameObject() : 
+    m_uuid( UUID::GenerateUUID() ) // here we generate an unique UUID for this gameObject
 {
     // set the current transfrom of the object
     transform = new Transform(); 

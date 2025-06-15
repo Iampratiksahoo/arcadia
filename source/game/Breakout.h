@@ -1,7 +1,7 @@
 #ifndef BREAKOUT_H
 #define BREAKOUT_H
 
-#include "engine/Core.h" 
+#include "Engine/Core.h" 
 
 class Breakout : public AbstractGameBase
 {
