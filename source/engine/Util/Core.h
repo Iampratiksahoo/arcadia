@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Log.h"
+#include "FileHandler.h"
 #include "ResourceManager.h"
 
 #endif

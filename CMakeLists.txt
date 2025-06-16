@@ -14,13 +14,13 @@ file(
     ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/source/*.c
 )
-
-add_executable(arcadia 
+    
+    add_executable(arcadia 
     ${SOURCE_FILES}
 )
-
+    
 target_include_directories(arcadia PRIVATE external/include ${CMAKE_SOURCE_DIR}/source)
-# include_directories(arcadia PRIVATE ${CMAKE_SOURCE_DIR}/source)
+target_compile_definitions(arcadia PRIVATE PROJECT_ROOT_DIR="${CMAKE_SOURCE_DIR}")
 
 target_link_libraries(arcadia
     ${GLFW3_LIBRARY}

@@ -7,12 +7,10 @@
 #include "Lib/stb.h"
 #include "glad/glad.h"
 
+#include "FileHandler.h"
 #include "Engine/Util/Log.h"
 #include "Engine/Core/Texture2D.h"
 #include "Engine/Core/Shader.h"
-
-#define PROJECT_PATH "/Users/pratik/Projects/Misc/arcadia/"
-#define ABSOLUTE_RESOURCES_PATH(path) (std::string(PROJECT_PATH) + std::string(path)).c_str()
 
 // Instantiate static variables
 std::map<std::string, Texture2D>    ResourceManager::m_nameToTexture2DMap;
@@ -20,8 +18,11 @@ std::map<std::string, Shader>       ResourceManager::m_nameToShaderMap;
 
 Shader& ResourceManager::LoadShader(std::string name, const char *vShaderFile, const char *fShaderFile)
 {
+    std::string absoluteVertexShaderPathStr = FileHandler::GetAbsolutePath(vShaderFile);
+    std::string absoluteFragmentShaderPathStr = FileHandler::GetAbsolutePath(fShaderFile);
+
     // if we have a valid shader, store it in the map
-    m_nameToShaderMap[name] = loadShaderFromFile( ABSOLUTE_RESOURCES_PATH( vShaderFile ), ABSOLUTE_RESOURCES_PATH( fShaderFile ));
+    m_nameToShaderMap[name] = loadShaderFromFile( absoluteVertexShaderPathStr.c_str(), absoluteFragmentShaderPathStr.c_str() );
 
     // return to caller 
     return GetShader( name );
@@ -34,9 +35,11 @@ Shader& ResourceManager::GetShader(std::string name)
 
 Texture2D& ResourceManager::LoadTexture2D(std::string name, const char *tFileName, bool alpha)
 {
+    std::string absoluteTexturePathStr = FileHandler::GetAbsolutePath( tFileName );
+
     // if we have a valid texture, store it in the map
     // m_nameToTexture2DMap[name] = loadTextureFromFile( ABSOLUTE_RESOURCES_PATH( tFileName ), alpha);
-    m_nameToTexture2DMap.emplace(name, loadTextureFromFile( ABSOLUTE_RESOURCES_PATH( tFileName ), alpha));
+    m_nameToTexture2DMap.emplace(name, loadTextureFromFile( absoluteTexturePathStr.c_str(), alpha));
 
     // return to caller
     return GetTexture2D( name );
@@ -138,8 +141,6 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
             // if we have a valid data
             if(data)
             {
-                AC_NOTICE("Adding Data To Texture with Id: %d", texture.id);
-
                 // generate the texture with the loaded data
                 texture.Generate(width, height, data);
 
