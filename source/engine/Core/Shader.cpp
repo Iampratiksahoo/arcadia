@@ -140,7 +140,7 @@ void Shader::checkCompileErrors(unsigned int shader, const char* type)
         if (!success)
         {
             glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-            AC_ERROR("ERROR::SHADER_COMPILATION_ERROR of type: %s\n%s\n -- --------------------------------------------------- -- ", type, infoLog);
+            AC_ERROR("Shader::SHADER_COMPILATION_ERROR of type: %s\n%s\n -- --------------------------------------------------- -- ", type, infoLog);
         }
     }
     else
@@ -149,7 +149,7 @@ void Shader::checkCompileErrors(unsigned int shader, const char* type)
         if (!success)
         {
             glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-            AC_ERROR("ERROR::PROGRAM_LINKING_ERROR of type: %s\n%s\n -- --------------------------------------------------- -- ", type, infoLog);
+            AC_ERROR("Shader::PROGRAM_LINKING_ERROR of type: %s\n%s\n -- --------------------------------------------------- -- ", type, infoLog);
         }
     }
 }

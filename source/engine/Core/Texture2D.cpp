@@ -27,7 +27,7 @@ void Texture2D::Generate(unsigned int width, unsigned int height, unsigned char 
     unsigned int error = glGetError();
     if (error != GL_NO_ERROR)
     {
-        AC_ERROR("OpenGL error after glTexImage2D: %d", error);
+        AC_ERROR("Texture2D:OpenGL error after glTexImage2D: %d", error);
     }
     
     // set Texture wrap and filter modes

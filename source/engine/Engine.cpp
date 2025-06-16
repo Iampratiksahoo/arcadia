@@ -41,14 +41,14 @@ m_window(nullptr)
         // create a window 
         if (m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr)) 
         {
-            AC_LOG("Window initialized"); 
+            AC_LOG("Engine::Window initialized"); 
 
             // set the current glfw context for the window.
             glfwMakeContextCurrent(m_window);
 
             if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
             {
-                AC_LOG("Loaded GLAD successfully"); 
+                AC_LOG("Engine::Loaded GLAD successfully"); 
 
                 // set the callback for key input
                 glfwSetKeyCallback(m_window, keyCallback);
@@ -76,7 +76,7 @@ m_window(nullptr)
     }
     catch (std::exception e)
     {
-        AC_ERROR("Failed to create window with error: %s", e.what());   
+        AC_ERROR("Engine::Failed to create window with error: %s", e.what());   
         glfwTerminate();
         exit(-1);
     }

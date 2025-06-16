@@ -70,7 +70,7 @@ void ResourceManager::Clear()
     // finally clear the Texture map
     m_nameToTexture2DMap.clear();
 
-    AC_SUCCESS("Cleared all resources from memory");
+    AC_SUCCESS("ResourceManager::Cleared all resources from memory");
 }
 
 Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *fShaderFile)
@@ -107,11 +107,11 @@ Shader ResourceManager::loadShaderFromFile(const char *vShaderFile, const char *
 
         shader.Compile(vShaderCode, fShaderCode);
 
-        AC_SUCCESS("Successfully loaded shader from files: %s, %s", vShaderFile, fShaderFile);
+        AC_SUCCESS("ResourceManager::Successfully loaded shader from files: %s, %s", vShaderFile, fShaderFile);
     }
     catch (std::ifstream::failure &e)
     {
-        AC_ERROR("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: %s", e.what());
+        AC_ERROR("ResourceManager::ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: %s", e.what());
     }
 
     return shader;
@@ -147,12 +147,12 @@ Texture2D ResourceManager::loadTextureFromFile(const char *file, bool alpha)
                 // free the image data
                 stbi_image_free(data);
 
-                AC_SUCCESS("Successfully loaded texture from file %s", file);
+                AC_SUCCESS("ResourceManager::Successfully loaded texture from file %s", file);
             }
         }
         catch (const std::exception &e)
         {
-            AC_ERROR("Failed to load texture from file %s with error: %s", file, e.what());
+            AC_ERROR("ResourceManager::Failed to load texture from file %s with error: %s", file, e.what());
         }
     }
 
