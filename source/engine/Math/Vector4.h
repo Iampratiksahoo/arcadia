@@ -12,6 +12,8 @@ class Vector4
 public:
     T x, y, z, w;
 
+    Vector4() : Vector4(Vector4<T>::Zero) {}
+
     Vector4(T x) : Vector4(x, x, x, x) {}
 
     Vector4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w)

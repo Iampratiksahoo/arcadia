@@ -7,6 +7,7 @@
 
 std::string FileHandler::LoadFileFromPath(const char* path)
 {
+    // construct the absolute path before attempting load the file
     std::string absolutePathStr = GetAbsolutePath(path);
     const char* absolutePath = absolutePathStr.c_str();
 

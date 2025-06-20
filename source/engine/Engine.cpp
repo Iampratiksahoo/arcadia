@@ -16,16 +16,19 @@
 #define OPENGL_VERSION_MAJOR 3
 #define OPENGL_VERSION_MINOR 3
 
-// because we ensure that there is always one single instance of the Engine class, we can use static members
-int Engine::m_width = WINDOW_WIDTH;
-int Engine::m_height = WINDOW_HEIGHT;
-const char* Engine::m_title = WINDOW_TITLE;
-
-Engine::Engine(AbstractGameBase& game) : 
+Engine::Engine(AbstractGameBase* game) : 
 m_game(game),
-m_state(State::None), 
 m_window(nullptr)
 {
+    // set the width and height 
+    m_width = WINDOW_WIDTH;
+    m_height = WINDOW_HEIGHT;
+    m_title = WINDOW_TITLE;
+
+    // set the screen width and height for the game 
+    m_game->m_windowWidth = m_width; 
+    m_game->m_windowHeight = m_height;
+
     // first initialize GLFW to use OpenGL
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION_MAJOR);
@@ -42,6 +45,9 @@ m_window(nullptr)
         if (m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr)) 
         {
             AC_LOG("Engine::Window initialized"); 
+
+            // set the user pointer for later usage
+            glfwSetWindowUserPointer( m_window, this );
 
             // set the current glfw context for the window.
             glfwMakeContextCurrent(m_window);
@@ -62,7 +68,7 @@ m_window(nullptr)
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
                 // ok now everything is setup, we can initialize the game
-                m_game.Init();
+                m_game->Init();
             }
             else
             {
@@ -96,16 +102,16 @@ m_window(nullptr)
         glfwPollEvents();
 
         // process input
-        m_game.ProcessInput( m_deltaTime );
+        m_game->ProcessInput( m_deltaTime );
 
         // update the game state
-        m_game.Update( m_deltaTime );
+        m_game->Update( m_deltaTime );
 
         // clear the scree
         ClearScreen();
 
         // render the game
-        m_game.Render();
+        m_game->Render();
 
         // finally, swap buffers and poll events
         glfwSwapBuffers( m_window );
@@ -113,7 +119,7 @@ m_window(nullptr)
 
     // once the game is done running, preform a cleanup 
     // this needs to happen here, before the destructor kicks in 
-    m_game.Cleanup();
+    m_game->Cleanup();
 }
 
 Engine::~Engine()
@@ -139,8 +145,12 @@ void Engine::framebufferSizeCallback(GLFWwindow *window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
-    m_width = width;
-    m_height = height;
+    if (Engine* engine = static_cast<Engine*>(glfwGetWindowUserPointer(window)))
+    {
+        engine->m_width = width;
+        engine->m_height = height;
+    }
+
 
     // You need to get the Game instance from the window user pointer if you want to update members.
     glViewport(0, 0, width, height);

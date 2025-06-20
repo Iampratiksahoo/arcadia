@@ -18,6 +18,16 @@ public:
 
     // Clean up resources
     virtual void Cleanup() = 0;
-};
+
+protected:
+    inline int getWindowWidth() const { return m_windowWidth; }
+    inline int getWindowHeight() const { return m_windowHeight; }
+
+private: 
+    friend class Engine; 
+
+    int m_windowWidth; 
+    int m_windowHeight; 
+};  
 
 #endif // ABSTRACTGAMEBASE_H

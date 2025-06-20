@@ -127,6 +127,7 @@ private:
 
 public: 
     Transform* transform; 
+    std::string name; 
 
 private:
     std::string m_uuid; 

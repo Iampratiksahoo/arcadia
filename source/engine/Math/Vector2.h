@@ -13,6 +13,8 @@ class Vector2
 public:
     T x, y;
 
+    Vector2() : Vector2(Vector2<T>::Zero) {}
+
     Vector2(T x) : Vector2(x, x) { }
 
     Vector2(T x, T y) : x(x), y(y)

@@ -26,7 +26,7 @@ public:
     /// <summary>
     /// Activates the shader
     /// </summary>
-    Shader* Use();
+    Shader& Use();
 
     /// <summary>
     /// Sets the boolean parameter for a shader

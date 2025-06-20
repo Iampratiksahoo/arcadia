@@ -16,7 +16,7 @@ class SpriteRenderer : public AbstractComponent
         ~SpriteRenderer();
 
         void Reset() override; 
-        void Draw( Vector3<float> color = Vector3<float>(1.0f) );
+        void Draw();
 
 #pragma region INLINE_GETTERS_AND_SETTERS
 
@@ -58,6 +58,7 @@ class SpriteRenderer : public AbstractComponent
     public:
         Shader* shader;
         Texture2D* texture;
+        Vector3<float> color;
     private:
         unsigned int m_quadVAO;
 

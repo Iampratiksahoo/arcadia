@@ -12,6 +12,9 @@ GameObject::GameObject() :
     // set the current transfrom of the object
     transform = new Transform(); 
 
+    // assign a default name 
+    name = "gameobject_" + m_uuid; 
+
     // add it to the list of components 
     m_components.push_back( transform );
 }

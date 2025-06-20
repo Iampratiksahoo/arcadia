@@ -3,6 +3,6 @@
 int main ( void ) 
 {
     AbstractGameBase *game = new Breakout();
-    Engine engine { *game };
+    Engine engine { game };
     return 0;
 }

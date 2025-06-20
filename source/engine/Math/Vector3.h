@@ -12,6 +12,8 @@ class Vector3
 public:
     T x, y, z;
 
+    Vector3() : Vector3(Vector3<T>::Zero) {}
+
     Vector3(T x) : Vector3(x, x, x) {}
 
     Vector3(T x, T y, T z) : x(x), y(y), z(z)

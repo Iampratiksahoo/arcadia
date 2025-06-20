@@ -46,10 +46,10 @@ void Shader::Compile(const char *vShaderCode, const char *fShaderCode)
     glDeleteShader(fragment);    
 }
 
-Shader *Shader::Use()
+Shader& Shader::Use()
 {
     glUseProgram(id);
-    return this;
+    return *this;
 }
 
 void Shader::SetBoolean(const char* name, bool value) const

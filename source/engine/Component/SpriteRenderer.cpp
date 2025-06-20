@@ -13,8 +13,8 @@ SpriteRenderer::SpriteRenderer() : SpriteRenderer( nullptr, nullptr )
 SpriteRenderer::SpriteRenderer(Shader *shader, Texture2D* texture) : 
     m_size(10.f),
     shader( shader ), 
-    texture( texture )
-
+    texture( texture ),
+    color( Vector3<float>(1.f) )
 {
     // initialize (and configure) the quad's VAO (Vertex Array Object)
     initRenderData();
@@ -44,7 +44,7 @@ void SpriteRenderer::Reset()
     }
 }
 
-void SpriteRenderer::Draw( Vector3<float> color )
+void SpriteRenderer::Draw()
 {
     // if either of shader or texture is null, then do not render
     if( shader != nullptr &&  texture != nullptr )

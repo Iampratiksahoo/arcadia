@@ -4,20 +4,9 @@
 class Engine
 {
     public: 
-        enum class State
-        {
-            None = 0,
-            Active,
-            Menu,
-            Win,
-        };
-
-        Engine(class AbstractGameBase& game);
+        Engine(class AbstractGameBase* game);
         ~Engine();
 
-        inline static const int GetWidth() { return m_width; }
-        inline static const int GetHeight() { return m_height; }
-        
     protected:
         void ClearScreen();
 
@@ -26,18 +15,16 @@ class Engine
         static void keyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods);
 
     private:
-        class AbstractGameBase& m_game;
+        class AbstractGameBase* m_game;
         struct GLFWwindow* m_window;
 
         // these are require to be static 
-        static int m_width;
-        static int m_height;
-        static const char* m_title;
+        int m_width;
+        int m_height;
+        const char* m_title;
 
         float m_deltaTime; 
         float m_lastFrameTime;
-
-        State m_state;	
 };
 
 #endif // ENGINE_H
