@@ -105,6 +105,24 @@ public:
         return *this + (v * (U)-1);
     }
 
+    Vector4<T> operator*( const Vector4<T>& vec ) {
+        return Vector4<T>(
+            x * vec.x,
+            y * vec.y,
+            z * vec.z,
+            w * vec.w
+        );
+    }
+
+    Vector4<T> operator/( const Vector4<T>& vec ) {
+        return Vector4<T>(
+            x / vec.x,
+            y / vec.y,
+            z / vec.z,
+            w / vec.w
+        );
+    }
+
     Vector4<T>& operator=(const Vector4<T>& vec)
     {
         if (this != &vec)

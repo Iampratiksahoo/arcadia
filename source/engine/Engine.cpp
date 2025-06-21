@@ -101,9 +101,6 @@ m_window(nullptr)
         // poll glfw window events
         glfwPollEvents();
 
-        // process input
-        m_game->ProcessInput( m_deltaTime );
-
         // update the game state
         m_game->Update( m_deltaTime );
 
@@ -150,7 +147,6 @@ void Engine::framebufferSizeCallback(GLFWwindow *window, int width, int height)
         engine->m_width = width;
         engine->m_height = height;
     }
-
 
     // You need to get the Game instance from the window user pointer if you want to update members.
     glViewport(0, 0, width, height);

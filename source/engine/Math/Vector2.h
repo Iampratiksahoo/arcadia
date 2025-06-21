@@ -90,6 +90,20 @@ public:
         return Vector2<T>(x - vec.x, y - vec.y);
     }
 
+    Vector2<T> operator*( const Vector2<T>& vec ) {
+        return Vector2<T>(
+            x * vec.x,
+            y * vec.y
+        );
+    }
+
+    Vector2<T> operator/( const Vector2<T>& vector ) {
+        return Vector2<T>(
+            x / vector.x,
+            y / vector.y
+        );
+    }
+
     template <typename U>
     Vector2<T> operator+(const U& v)
     {

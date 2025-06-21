@@ -51,9 +51,9 @@ void SpriteRenderer::Render()
     {
         // fetch/calculate the pre-requisites 
         Transform* transform = gameObject->transform;
-        Vector3<float> position = transform->position;
-        float rotationInRadians = transform->rotation.Magnitude();
-        Vector3<float> rotationAxis = transform->rotation.GetNormalized();
+        Vector3<float> position = transform->GetPosition();
+        float rotationInRadians = transform->GetRotation().Magnitude();
+        Vector3<float> rotationAxis = transform->GetRotation().GetNormalized();
         Vector2<float> size = Vector2<float>( texture->width, texture->height );
         
         // if we have a size explicitly set for this Sprite, then set that instead

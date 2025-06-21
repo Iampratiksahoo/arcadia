@@ -116,6 +116,22 @@ public:
         return *this + (v * (U)-1);
     }
 
+    Vector3<T> operator*( const Vector3<T>& vec ) {
+        return Vector3<T>(
+            x * vec.x,
+            y * vec.y,
+            z * vec.z
+        );
+    }
+
+    Vector3<T> operator/( const Vector3<T>& vector ) {
+        return Vector3<T>(
+            x / vector.x,
+            y / vector.y,
+            z / vector.z
+        );
+    }
+
     Vector3<T>& operator+=(const Vector3<T>& vec)
     {
         x += vec.x;
