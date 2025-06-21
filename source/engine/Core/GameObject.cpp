@@ -19,11 +19,11 @@ GameObject::GameObject() :
     m_components.push_back( transform );
 }
 
-void GameObject::Draw()
+void GameObject::Render()
 {
     if( SpriteRenderer* renderer = GetComponent<SpriteRenderer>() )
     {
-        renderer->Draw();
+        renderer->Render();
     }
 }
 

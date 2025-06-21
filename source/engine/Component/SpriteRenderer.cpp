@@ -44,7 +44,7 @@ void SpriteRenderer::Reset()
     }
 }
 
-void SpriteRenderer::Draw()
+void SpriteRenderer::Render()
 {
     // if either of shader or texture is null, then do not render
     if( shader != nullptr &&  texture != nullptr )

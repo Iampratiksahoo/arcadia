@@ -17,7 +17,7 @@ class GameObject
 public:
     GameObject();
 
-    virtual void Draw();
+    virtual void Render();
 
 #pragma region TEMPLATES
     /// @brief True's if AbstractBaseComponent attached on the GameObject 

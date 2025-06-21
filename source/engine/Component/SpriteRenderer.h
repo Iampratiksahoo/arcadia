@@ -16,7 +16,7 @@ class SpriteRenderer : public AbstractComponent
         ~SpriteRenderer();
 
         void Reset() override; 
-        void Draw();
+        void Render();
 
 #pragma region INLINE_GETTERS_AND_SETTERS
 
