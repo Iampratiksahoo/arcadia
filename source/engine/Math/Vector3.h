@@ -65,13 +65,19 @@ public:
 
 
     template <typename U>
-    Vector3<T> operator*(const U& v)
+    Vector3<T> operator*(const U& s)
     {
         static_assert(std::is_same<U, int>::value
             || std::is_same<U, float>::value
             || std::is_same<U, double>::value, "Vector3<T>: U must be int, float, or double");
 
-        return Vector3<T>(x * v, y * v, z * v);
+        return Vector3<T>(x * s, y * s, z * s);
+    }
+
+    template <typename U> 
+    Vector3<T> operator/(const U& s)
+    {
+        return *this * (1 / s);
     }
 
     Vector3<T> operator+(const Vector3<T>& vec)
