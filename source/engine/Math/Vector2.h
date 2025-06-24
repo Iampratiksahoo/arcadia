@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <string>
 #include <sstream>
+#include "Math.h"
 
 template <typename T>
 class Vector2
@@ -16,6 +17,8 @@ public:
     Vector2() : Vector2(Vector2<T>::Zero) {}
 
     Vector2(T x) : Vector2(x, x) { }
+
+    Vector2(const Vector2<T>& other) : Vector2(other.x, other.y) { }
 
     Vector2(T x, T y) : x(x), y(y)
     {
@@ -36,7 +39,13 @@ public:
     /// @brief Returns the Magnitude/Length of the vector 
     float Magnitude() const
     {
-        return std::sqrt( x*x + y*y );
+        return std::sqrt( SquareMagnitude() );
+    }
+
+    /// @brief Returns the Square Magnitude of the vector 
+    float SquareMagnitude() const 
+    {
+        return x*x + y*y;
     }
 
     /// @brief Normalizes this Vector
@@ -154,9 +163,26 @@ public:
     {
         return !(*this == vec);
     }
+
+    Vector2<T> operator-() const
+    {
+        return Vector2<T>(-x, -y);
+    }
+
+    static Vector2<T> Clamp(const Vector2<T>& value, const Vector2<T>& min, const Vector2<T>& max)
+    {
+        return Vector2<T>(
+            Math::Clamp(value.x, min.x, max.x),
+            Math::Clamp(value.y, min.y, max.y)
+        );
+    }
 #pragma region STATICS
     static const Vector2<T> Zero;
     static const Vector2<T> One;
+    static const Vector2<T> Up;
+    static const Vector2<T> Down;
+    static const Vector2<T> Left;
+    static const Vector2<T> Right;
 #pragma endregion
 };
 
@@ -166,5 +192,17 @@ const Vector2<T> Vector2<T>::Zero = Vector2<T>(0);
 
 template<typename T>
 const Vector2<T> Vector2<T>::One = Vector2<T>(1);
+
+template<typename T>
+const Vector2<T> Vector2<T>::Up = Vector2<T>(0, 1);
+
+template<typename T>
+const Vector2<T> Vector2<T>::Down = Vector2<T>(0, -1);
+
+template<typename T>
+const Vector2<T> Vector2<T>::Left = Vector2<T>(-1, 0);
+
+template<typename T>
+const Vector2<T> Vector2<T>::Right = Vector2<T>(1, 0);
 
 #endif

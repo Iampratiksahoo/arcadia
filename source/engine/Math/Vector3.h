@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <string>
 #include <sstream>
+#include "Math.h"
 
 template <typename T>
 class Vector3
@@ -15,6 +16,8 @@ public:
     Vector3() : Vector3(Vector3<T>::Zero) {}
 
     Vector3(T x) : Vector3(x, x, x) {}
+
+    Vector3(const Vector3<T>& other) : Vector3(other.x, other.y, other.z) { }
 
     Vector3(T x, T y, T z) : x(x), y(y), z(z)
     {
@@ -35,7 +38,13 @@ public:
     /// @brief Returns the Magnitude/Length of the vector 
     float Magnitude() const
     {
-        return std::sqrt( x*x + y*y + z*z );
+        return std::sqrt( SquareMagnitude() );
+    }
+
+    /// @brief Returns the Square Magnitude of the vector 
+    float SquareMagnitude() const 
+    {
+        return x*x + y*y + z*z;
     }
 
     /// @brief Normalizes this Vector
@@ -159,9 +168,29 @@ public:
     {
         return !(*this == vec);
     }
+
+    Vector3<T> operator-() const
+    {
+        return Vector3<T>(-x, -y, -z);
+    }
+
+    static Vector3<T> Clamp(const Vector3<T>& value, const Vector3<T>& min, const Vector3<T>& max)
+    {
+        return Vector3<T>(
+            Math::Clamp(value.x, min.x, max.x),
+            Math::Clamp(value.y, min.y, max.y),
+            Math::Clamp(value.z, min.z, max.z)
+        );
+    }
 #pragma region STATICS
     static const Vector3<T> Zero;
     static const Vector3<T> One;
+    static const Vector3<T> Up;
+    static const Vector3<T> Down;
+    static const Vector3<T> Left;
+    static const Vector3<T> Right;
+    static const Vector3<T> Forward;
+    static const Vector3<T> Backward;
 #pragma endregion
 };
 
@@ -171,5 +200,23 @@ const Vector3<T> Vector3<T>::Zero = Vector3<T>(0);
 
 template<typename T>
 const Vector3<T> Vector3<T>::One = Vector3<T>(1);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Up = Vector3<T>(0, 1, 0);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Down = Vector3<T>(0, -1, 0);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Left = Vector3<T>(-1, 0, 0);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Right = Vector3<T>(1, 0, 0);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Forward = Vector3<T>(0, 0, 1);
+
+template<typename T>
+const Vector3<T> Vector3<T>::Backward = Vector3<T>(0, 0, -1);
 
 #endif

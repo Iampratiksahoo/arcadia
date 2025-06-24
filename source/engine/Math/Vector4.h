@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <string>
 #include <sstream>
+#include "Math.h"
 
 template <typename T>
 class Vector4
@@ -16,12 +17,15 @@ public:
 
     Vector4(T x) : Vector4(x, x, x, x) {}
 
+    Vector4(const Vector4<T>& other) : Vector4(other.x, other.y, other.z, other.w) { }
+
     Vector4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w)
     {
         static_assert(std::is_same<T, int>::value
             || std::is_same<T, float>::value
             || std::is_same<T, double>::value, "Vector4<T>: T must be int, float or double");
     }
+
 
     const char* ToString() const
     {
@@ -35,7 +39,13 @@ public:
     /// @brief Returns the Magnitude/Length of the vector 
     float Magnitude() const
     {
-        return std::sqrt( x*x + y*y + z*z + w*w );
+        return std::sqrt( SquareMagnitude() );
+    }
+
+    /// @brief Returns the Square Magnitude of the vector 
+    float SquareMagnitude() const 
+    {
+        return x*x + y*y + z*z + w*w;
     }
 
     /// @brief Normalizes this Vector
@@ -164,6 +174,21 @@ public:
     bool operator!=(const Vector4<T>& vec) const
     {
         return !(*this == vec);
+    }
+
+    Vector4<T> operator-() const
+    {
+        return Vector4<T>(-x, -y, -z, -w);
+    }
+
+    static Vector4<T> Clamp(const Vector4<T>& value, const Vector4<T>& min, const Vector4<T>& max)
+    {
+        return Vector4<T>(
+            Math::Clamp(value.x, min.x, max.x),
+            Math::Clamp(value.y, min.y, max.y),
+            Math::Clamp(value.z, min.z, max.z),
+            Math::Clamp(value.w, min.w, max.w)
+        );
     }
     
 #pragma region STATICS
