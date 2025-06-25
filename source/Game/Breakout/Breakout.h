@@ -1,7 +1,7 @@
-#ifndef BREAKOUT_H
-#define BREAKOUT_H
+#pragma once
 
 #include "Engine/Core.h" 
+#include "GameLevel.h"
 
 class Breakout : public AbstractGameBase
 {
@@ -12,9 +12,6 @@ public:
     // Initialize the game
     void Init() override;
 
-    // Handle input events
-    void ProcessInput(float deltaTime) override;
-
     // Update the game state
     void Update(float deltaTime) override;
 
@@ -24,9 +21,20 @@ public:
     // Clean up resources
     void Cleanup() override;
 
-private:
-    int m_width; 
-    int m_height; 
-};
+    GameLevel* GetCurrentLevel() const ;
+    inline GameObject* GetPaddle() const { return m_paddle; }
 
-#endif
+private:
+    std::vector<GameLevel*> m_levels; 
+    uint m_currentLevel;
+
+    GameObject* m_background;
+    GameObject* m_paddle;
+    GameObject* m_ball; 
+
+    Vector2<float> m_paddleSize; 
+    float m_paddleVelocity; 
+
+    float m_ballRadius; 
+    float m_ballVelocity; 
+};
