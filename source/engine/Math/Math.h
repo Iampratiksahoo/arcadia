@@ -8,6 +8,11 @@ public:
     {
         return std::max(min, std::min(max, value));
     }  
+
+    static float Abs(float value)
+    {
+        return std::abs( value );
+    }
 };
 
 #endif

@@ -73,19 +73,24 @@ public:
         return normalized;
     }
 
-    template <typename U>
-    Vector4<T> operator*(const U& s)
+    float Dot(const Vector4<float>& other) const
     {
-        static_assert(std::is_same<U, int>::value
-            || std::is_same<U, float>::value
-            || std::is_same<U, double>::value, "Vector4<T>: U must be int, float, or double");
-
-        return Vector4<T>(x * s, y * s, z * s, w * s);
+        return x * other.x 
+             + y * other.y 
+             + z * other.z
+             + w * other.w;
     }
 
-    template <typename U> 
-    Vector4<T> operator/(const U& s)
+    Vector4<T> operator*(const float& s)
     {
+        return Vector4<T>(x * s, y * s, z * s, w * s);
+    }
+ 
+    Vector4<T> operator/(const float& s)
+    {
+        if (s == 0.0f)
+            throw std::runtime_error("Division by zero in Vector4");
+
         return *this * (1 / s);
     }
 
