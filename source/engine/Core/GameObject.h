@@ -120,6 +120,9 @@ public:
     }
 
     inline const std::string& GetUuid() const { return m_uuid; }
+
+    inline bool IsActive() const { return m_isActive; }
+    inline void SetActive(bool isActive) { m_isActive = isActive; };
 #pragma endregion
 
 private: 
@@ -131,6 +134,7 @@ public:
 
 private:
     std::string m_uuid; 
+    bool m_isActive; // will it be rendered 
     std::vector<AbstractComponent*> m_components;
 };
 

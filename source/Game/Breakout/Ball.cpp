@@ -82,7 +82,7 @@ void Ball::Move(float deltaTIme, float velocity, int windowWidth, int windowHeig
             Brick* brick = brickObj->GetComponent<Brick>();
 
             // change the direction, only if the object is not destroyed this frame
-            if(!brick->isDestroyed)
+            if(brickObj->IsActive())
             {
                 if( checkCollision( brickObj ) )
                 {

@@ -45,11 +45,7 @@ void GameLevel::Render()
 {
     for(GameObject* brick : m_bricks)
     {
-        // we render it only if it is not destroyed!! 
-        if( !brick->GetComponent<Brick>()->isDestroyed )
-        {
-            brick->Render();
-        }
+        brick->Render();
     }
 }
 
@@ -133,7 +129,6 @@ GameObject* GameLevel::constructBrick(Vector3<float> position, Vector2<float> si
     // now add the brick component 
     Brick* brick = obj->AddComponent<Brick>();
     brick->isSolid = isSolid;
-    brick->isDestroyed = false; // not destroyed as soon as created
 
     return obj;
 }

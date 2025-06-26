@@ -15,15 +15,23 @@ GameObject::GameObject() :
     // assign a default name 
     name = "gameobject_" + m_uuid; 
 
+    // set the object as active in the ctor
+    m_isActive = true;
+
     // add it to the list of components 
     m_components.push_back( transform );
 }
 
 void GameObject::Render()
 {
-    if( SpriteRenderer* renderer = GetComponent<SpriteRenderer>() )
+    // if the object is active and needs rendering 
+    // if there is a valid renderer 
+    if( m_isActive )
     {
-        renderer->Render();
+        if(SpriteRenderer* renderer = GetComponent<SpriteRenderer>())
+        {
+            renderer->Render();
+        }
     }
 }
 
