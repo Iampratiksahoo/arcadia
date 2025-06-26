@@ -13,6 +13,16 @@ public:
     {
         return std::abs( value );
     }
+
+    static float Min( float value1, float value2 )
+    {
+        return std::min( value1, value2 );
+    }
+
+    static float Max( float value1, float value2 )
+    {
+        return std::max( value1, value2 );
+    }
 };
 
 #endif

@@ -15,6 +15,9 @@ public:
     // Update the game state
     void Update(float deltaTime) override;
 
+    // update for collision
+    void FixedUpdate(float fixedDeltaTime) override; 
+
     // Render the game
     void Render() override;
 

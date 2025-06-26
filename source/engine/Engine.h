@@ -25,6 +25,8 @@ class Engine
 
         float m_deltaTime; 
         float m_lastFrameTime;
+
+        float m_fixedDeltaTimeAccum; 
 };
 
 #endif // ENGINE_H

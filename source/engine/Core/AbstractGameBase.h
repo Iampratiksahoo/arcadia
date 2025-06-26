@@ -10,6 +10,9 @@ public:
     // Update the game state
     virtual void Update(float deltaTime) = 0;
 
+    // fixed update for collision detections 
+    virtual void FixedUpdate(float fixedDeltaTime) = 0; 
+
     // Render the game
     virtual void Render() = 0;
 

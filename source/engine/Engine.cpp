@@ -16,6 +16,8 @@
 #define OPENGL_VERSION_MAJOR 3
 #define OPENGL_VERSION_MINOR 3
 
+#define FIXED_DELTA_TIME 1.f/120.f
+
 Engine::Engine(AbstractGameBase* game) : 
 m_game(game),
 m_window(nullptr)
@@ -95,6 +97,10 @@ m_window(nullptr)
         m_deltaTime = currentFrame - m_lastFrameTime;
         m_lastFrameTime = currentFrame;
 
+        // accumulate the fixed delta time 
+        m_fixedDeltaTimeAccum += m_deltaTime; 
+        m_fixedDeltaTimeAccum = Math::Min( m_fixedDeltaTimeAccum,  0.25f); // avoid sprial of death 
+
         // call the Input class's BeginFrame to track the key states
         Input::BeginFrame();
 
@@ -103,6 +109,12 @@ m_window(nullptr)
 
         // update the game state
         m_game->Update( m_deltaTime );
+
+        while (m_fixedDeltaTimeAccum >= FIXED_DELTA_TIME )
+        {
+            m_game->FixedUpdate( FIXED_DELTA_TIME );
+            m_fixedDeltaTimeAccum -= FIXED_DELTA_TIME; 
+        }
 
         // clear the scree
         ClearScreen();

@@ -123,12 +123,12 @@ void Breakout::Update(float deltaTime)
     if(Input::GetKey(KeyCode::A)
         && m_paddle->transform->GetPosition().x > 0 )
     {
-        translation = Vector3<float>( -m_paddleVelocity, 0.f, 0.f) * deltaTime ;
+        translation = Vector3<float>::Left;
     }
     if(Input::GetKey(KeyCode::D)
         && m_paddle->transform->GetPosition().x < windowWidth - m_paddleSize.x)
-    {
-        translation = Vector3<float>( m_paddleVelocity, 0.f, 0.f) * deltaTime ;
+    {;
+        translation = Vector3<float>::Right;
     }
     if(Input::GetKeyDown(KeyCode::SPACE))
     {
@@ -139,12 +139,15 @@ void Breakout::Update(float deltaTime)
         }
     }
     
-    m_paddle->transform->Translate( translation );
+    m_paddle->transform->Translate( translation * m_paddleVelocity * deltaTime );
+}
 
+void Breakout::FixedUpdate(float fixedDeltaTime)
+{
     m_ball->GetComponent<Ball>()->Move(
-        deltaTime, 
+        fixedDeltaTime, 
         m_ballVelocity, 
-        windowWidth, 
+        getWindowWidth(), 
         getWindowHeight()
     );
 }
