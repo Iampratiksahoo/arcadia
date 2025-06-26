@@ -72,7 +72,7 @@ public:
         return normalized;
     }
 
-    float Dot(const Vector3<float>& other) const
+    float Dot(const Vector3<T>& other) const
     {
         return x * other.x 
              + y * other.y 
