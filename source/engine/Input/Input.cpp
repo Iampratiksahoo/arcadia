@@ -6,8 +6,11 @@
 // Definition and initialization
 bool Input::m_keyLastState[1024] = { false };
 bool Input::m_keyState[1024] = { false };
+bool Input::m_mouseInsideWindow = { false }; 
+ 
+Vector2<double> Input::m_mousePos = Vector2<double>::Zero; 
 
-void Input::BeginFrame()
+void Input::beginFrame()
 {
     for (int i = 0; i < 1024; ++i)
     {
@@ -15,7 +18,7 @@ void Input::BeginFrame()
     }
 }
 
-void Input::UpdateKey(int key, int action)
+void Input::updateKey(int key, int action)
 {
     if (key >= 0 && key < 1024)
     {
@@ -28,6 +31,12 @@ void Input::UpdateKey(int key, int action)
             m_keyState[key] = false;
         }
     }
+}
+
+void Input::updateMousePos(double mPosX, double mPosY)
+{
+    m_mousePos.x = mPosX; 
+    m_mousePos.y = mPosY; 
 }
 
 bool Input::GetKey(KeyCode keyCode)

@@ -60,6 +60,17 @@ m_window(nullptr)
 
                 // set the callback for key input
                 glfwSetKeyCallback(m_window, keyCallback);
+
+                // set callback for mouse input 
+                glfwSetCursorPosCallback(m_window, cursorPositionCallback);
+
+                // set callback for when the mouse enters the screen 
+                glfwSetCursorEnterCallback(m_window, cursorEnterCallback);
+
+                // set callback for when mouse is clicked 
+                glfwSetMouseButtonCallback(m_window, mouseButtonCallback);
+
+                // set callback for when the window size is changed
                 glfwSetFramebufferSizeCallback(m_window, framebufferSizeCallback);
 
                 // OpenGL configuration
@@ -102,7 +113,7 @@ m_window(nullptr)
         m_fixedDeltaTimeAccum = Math::Min( m_fixedDeltaTimeAccum,  0.25f); // avoid sprial of death 
 
         // call the Input class's BeginFrame to track the key states
-        Input::BeginFrame();
+        Input::beginFrame();
 
         // poll glfw window events
         glfwPollEvents();
@@ -165,13 +176,23 @@ void Engine::framebufferSizeCallback(GLFWwindow *window, int width, int height)
 }
 
 void Engine::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
-{
-    // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    {
-        glfwSetWindowShouldClose(window, true);
-    }
-
+{ 
     // now record states of each key press 
-    Input::UpdateKey(key, action);
+    Input::updateKey(key, action);
+}
+
+void Engine::cursorPositionCallback(GLFWwindow *window, double xpos, double ypos)
+{
+    Input::updateMousePos(xpos, ypos);
+}
+
+void Engine::cursorEnterCallback(GLFWwindow *window, int entered)
+{
+    Input::m_mouseInsideWindow = entered;
+}
+
+void Engine::mouseButtonCallback(GLFWwindow *window, int button, int action, int mods)
+{
+    // now record states of each key press, we use the same one for mouse as well.
+    Input::updateKey(button, action);
 }
