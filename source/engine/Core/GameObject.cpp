@@ -19,7 +19,7 @@ GameObject::GameObject() :
     m_isActive = true;
 
     // add it to the list of components 
-    m_components.push_back( transform );
+    addComponentImpl( transform );
 }
 
 void GameObject::Render()
@@ -41,6 +41,17 @@ void GameObject::addComponentImpl(AbstractComponent *component)
     {
         // assign the GameObject to be this
         component->gameObject = this;
+
+        // if component IS-A Transform, assign directly
+        if (Transform* asTransform = dynamic_cast<Transform*>(component))
+        {
+            component->transform = asTransform;
+        }
+        else
+        {
+            // Otherwise, get the existing Transform from this GameObject
+            component->transform = GetComponent<Transform>();
+        }
 
         // add to the list of components
         m_components.push_back( component );

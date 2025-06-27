@@ -3,6 +3,7 @@
 
 
 class GameObject;
+class Transform; 
 class AbstractComponent
 {
 public:
@@ -10,6 +11,7 @@ public:
 
 public:
     GameObject* gameObject; 
+    Transform* transform; 
 };
 
 #endif
