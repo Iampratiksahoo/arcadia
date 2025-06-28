@@ -8,15 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
-#define WINDOW_ASPECT_RATIO ((float)WINDOW_WIDTH / (float)WINDOW_HEIGHT)
-#define WINDOW_TITLE "Arcadia"
-
 #define OPENGL_VERSION_MAJOR 3
 #define OPENGL_VERSION_MINOR 3
-
-#define FIXED_DELTA_TIME 1.f/120.f
 
 Engine::Engine(AbstractGameBase* game) : 
 m_game(game),
@@ -25,10 +18,37 @@ m_fixedDeltaTimeAccum(0.0f),
 m_lastFrameTime(0.0f),       
 m_deltaTime(0.0f)            
 {
-    // set the width and height 
-    m_width = WINDOW_WIDTH;
-    m_height = WINDOW_HEIGHT;
-    m_title = WINDOW_TITLE;
+    // first try to load the ini file 
+    std::string iniPathStr = FileHandler::GetAbsolutePath( m_game->GetIniPath() );
+    const char* iniPath = iniPathStr.c_str(); 
+    IniParser gameIni( iniPath );
+
+    // if there is no ini file, then create a default one and kill the engine 
+    if(!gameIni.Load())
+    {
+        AC_WARN("Engine::Ctor() No Ini file found for the game, creating one now at '%s'", iniPath);
+
+        gameIni.Write("Window", "iWidth", "800");
+        gameIni.Write("Window", "iHeight", "600");
+        gameIni.Write("Window", "sTitle", "New Game");
+        gameIni.Write("Window", "bResizable", "0");
+
+        gameIni.Write("Physics", "fFixedDeltaTime", "0.008333333");
+
+        gameIni.Save();
+
+        AC_WARN("Ini file created, kindly configure it and retry");
+        exit(-1);
+    }
+
+    // parse the loaded ini file data
+    m_width = std::stof( gameIni.Read("Window", "iWidth", "800") );
+    m_height = std::stof( gameIni.Read("Window", "iHeight", "600") );
+    std::string titleStr = gameIni.Read("Window", "sTitle", "New Game");
+    m_title = titleStr.c_str();
+    m_resizable =  std::stoi( gameIni.Read("Window", "bResizable", "1") );
+
+    m_fixedDeltaTime = std::stof( gameIni.Read("Physics", "fFixedDeltaTime", "0.008333333") );
 
     // set the screen width and height for the game 
     m_game->m_windowWidth = m_width; 
@@ -127,10 +147,10 @@ m_deltaTime(0.0f)
         // update the game state
         SceneManager::update( m_deltaTime ); 
 
-        while (m_fixedDeltaTimeAccum >= FIXED_DELTA_TIME )
+        while (m_fixedDeltaTimeAccum >= m_fixedDeltaTime )
         {
-            SceneManager::fixedUpdate( FIXED_DELTA_TIME );
-            m_fixedDeltaTimeAccum -= FIXED_DELTA_TIME; 
+            SceneManager::fixedUpdate( m_fixedDeltaTime );
+            m_fixedDeltaTimeAccum -= m_fixedDeltaTime; 
         }
 
         // clear the scree

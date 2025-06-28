@@ -22,6 +22,10 @@ public:
     /// @brief Never called, explicitly need to call this 
     virtual void Reset() { }
 
+protected:
+    friend GameObject;
+    ~AbstractComponent() = default; 
+
 public:
     GameObject* gameObject; 
     Transform* transform; 

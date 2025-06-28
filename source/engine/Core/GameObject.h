@@ -16,7 +16,6 @@ class GameObject
 {
 public:
     GameObject(); 
-    ~GameObject(); 
 
 #pragma region TEMPLATES
     /// @brief True's if AbstractBaseComponent attached on the GameObject 
@@ -150,9 +149,12 @@ public:
     void SetActive(bool isActive);
 #pragma endregion
 
-private: 
+protected:
     friend class Scene; 
 
+    ~GameObject(); 
+
+private: 
     void gameStart();
     void update(float deltaTime);
     void fixedUpdate(float fixedDeltaTime);

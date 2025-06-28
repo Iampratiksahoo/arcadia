@@ -12,6 +12,8 @@ public:
     // Initialize the game
     void Init() override;
 
+    const char* GetIniPath() override { return "source/Game/Breakout/Breakout.ini"; };
+
     // Clean up resources
     void Cleanup() override;
 

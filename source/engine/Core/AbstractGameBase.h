@@ -4,10 +4,12 @@
 class AbstractGameBase
 {
 public:
-    // Initialize the game
+    /// @brief Called when the game is initialized initially 
     virtual void Init() = 0;
 
-    // Clean up resources
+    virtual const char* GetIniPath() = 0;
+
+    /// @brief called when the game is cleaned up, post game completion. 
     virtual void Cleanup() = 0;
 
 protected:

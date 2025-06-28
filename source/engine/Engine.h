@@ -20,10 +20,12 @@ class Engine
         class AbstractGameBase* m_game;
         struct GLFWwindow* m_window;
 
-        // these are require to be static 
         int m_width;
         int m_height;
         const char* m_title;
+        bool m_resizable; 
+
+        float m_fixedDeltaTime;
 
         float m_deltaTime; 
         float m_lastFrameTime;

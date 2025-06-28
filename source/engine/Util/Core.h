@@ -7,5 +7,6 @@
 #include "Util.h" 
 #include "FileHandler.h"
 #include "ResourceManager.h"
+#include "IniParser.h"
 
 #endif

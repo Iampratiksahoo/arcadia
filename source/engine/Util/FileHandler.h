@@ -3,8 +3,6 @@
 
 #include <string>
 
-#define ABSOLUTE_FILE_PATH(path) (std::string(PROJECT_ROOT_DIR) + std::string(path))    
-
 class FileHandler
 {
 public: 

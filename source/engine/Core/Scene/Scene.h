@@ -10,7 +10,6 @@ class Scene
 {
 public:
     Scene();
-    ~Scene();
 
     void AddGameObject(GameObject* gameObject);
     void RemoveGameObject(GameObject* GameObject);
@@ -19,8 +18,12 @@ public:
 
     inline const std::string& GetUuid() const { return m_uuid; }
 
-private:
+protected:
     friend class SceneManager; 
+
+    ~Scene();
+
+private:
 
     void gameStart();
     void update(float deltaTime);
