@@ -5,11 +5,73 @@
 Ball::Ball()
 {
     m_moveDirection = Vector3<float>(1.f, 1.f, 0.f);
+    m_velocity = 350.f; 
 }
 
-void Ball::Reset()
+void Ball::Update(float deltaTime)
 {
+    if(Input::GetKeyDown(KeyCode::SPACE))
+    {
+        if(transform->GetParent() != nullptr)
+        {
+            AC_NOTICE("Current Parent: %s", transform->GetParent()->gameObject->name.c_str());
+            transform->SetParent(nullptr);
+            isStuck = false;
+        }
+    }   
+}
 
+void Ball::FixedUpdate(float fixedDeltaTime)
+{
+    if( !isStuck )
+    {
+        Transform* objTransform = gameObject->transform;
+        float errorMargin = 20.f; 
+    
+        if( objTransform->GetPosition().x <= 0 )
+        {
+            m_moveDirection.x = -1.f;
+        }
+        if( objTransform->GetPosition().x >= m_gameInstance->GetWindowWidthAndHeight().x - errorMargin )
+        {
+            m_moveDirection.x = 1.f;
+        }
+        if( objTransform->GetPosition().y <= 0 )
+        {
+            m_moveDirection.y = -1.f;
+        }
+
+        // now check for collision with bricks 
+        for(GameObject* brickObj : m_gameInstance->GetCurrentLevel()->GetBricks() )
+        {
+            Brick* brick = brickObj->GetComponent<Brick>();
+
+            // change the direction, only if the object is not destroyed this frame
+            if(brickObj->IsActive())
+            {
+                if( checkCollision( brickObj ) )
+                {
+                    // now change the direction of the
+                    m_moveDirection = reflect(m_moveDirection, getCollisionNormal( brickObj ));
+
+                    // handle the collision with ball for the brick 
+                    brick->CollidedWithBall();
+                }
+            }
+        }
+
+        // now check the collision with paddle 
+        if( checkCollision( m_gameInstance->GetPaddle() ))
+        {
+            // now change the direction of the
+            m_moveDirection = reflect(m_moveDirection, getCollisionNormal( m_gameInstance->GetPaddle() )); 
+        }   
+
+        Vector3<float> translation = m_moveDirection * -m_velocity * fixedDeltaTime;
+
+        // move the ball
+        objTransform->Translate( translation );
+    }
 }
 
 bool Ball::checkCollision(GameObject *other) const
@@ -54,57 +116,6 @@ Vector3<float> Ball::reflect(Vector3<float> direction, Vector3<float> normal)
     Vector3<float> reflection = direction - (normal * 2.0f * direction.Dot(normal)); 
     reflection.z = 0;
     return reflection;
-}
-
-void Ball::Move(float deltaTIme, float velocity, int windowWidth, int windowHeight)
-{
-    if( !isStuck )
-    {
-        Transform* objTransform = gameObject->transform;
-        float errorMargin = 20.f; 
-    
-        if( objTransform->GetPosition().x <= 0 )
-        {
-            m_moveDirection.x = -1.f;
-        }
-        if( objTransform->GetPosition().x >= windowWidth - errorMargin )
-        {
-            m_moveDirection.x = 1.f;
-        }
-        if( objTransform->GetPosition().y <= 0 )
-        {
-            m_moveDirection.y = -1.f;
-        }
-
-        // now check for collision with bricks 
-        for(GameObject* brickObj : m_gameInstance->GetCurrentLevel()->GetBricks() )
-        {
-            Brick* brick = brickObj->GetComponent<Brick>();
-
-            // change the direction, only if the object is not destroyed this frame
-            if(brickObj->IsActive())
-            {
-                if( checkCollision( brickObj ) )
-                {
-                    // now change the direction of the
-                    m_moveDirection = reflect(m_moveDirection, getCollisionNormal( brickObj ));
-
-                    // handle the collision with ball for the brick 
-                    brick->CollidedWithBall();
-                }
-            }
-        }
-
-        // now check the collision with paddle 
-        if( checkCollision( m_gameInstance->GetPaddle() ))
-        {
-            // now change the direction of the
-            m_moveDirection = reflect(m_moveDirection, getCollisionNormal( m_gameInstance->GetPaddle() )); 
-        }   
-
-        // move the ball
-        objTransform->Translate( m_moveDirection * -velocity * deltaTIme );
-    }
 }
 
 void Ball::SetRadius(float radius)

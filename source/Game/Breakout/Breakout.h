@@ -12,20 +12,16 @@ public:
     // Initialize the game
     void Init() override;
 
-    // Update the game state
-    void Update(float deltaTime) override;
-
-    // update for collision
-    void FixedUpdate(float fixedDeltaTime) override; 
-
-    // Render the game
-    void Render() override;
-
     // Clean up resources
     void Cleanup() override;
 
     GameLevel* GetCurrentLevel() const ;
     inline GameObject* GetPaddle() const { return m_paddle; }
+
+    Vector2<float> GetWindowWidthAndHeight() { return Vector2<float>( getWindowWidth(), getWindowHeight() ); }
+
+private:
+    void SetCurrentLevel(int level);
 
 private:
     std::vector<GameLevel*> m_levels; 

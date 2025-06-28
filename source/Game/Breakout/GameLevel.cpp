@@ -41,14 +41,6 @@ void GameLevel::Load(const char *lFile, uint levelWidth, uint levelHeight)
     }
 } 
 
-void GameLevel::Render()
-{
-    for(GameObject* brick : m_bricks)
-    {
-        brick->Render();
-    }
-}
-
 void GameLevel::initLevel(std::vector<std::vector<uint>> tileData, uint lvlWidth, uint lvlHeight)
 {
     // calculate dimensions
@@ -129,6 +121,9 @@ GameObject* GameLevel::constructBrick(Vector3<float> position, Vector2<float> si
     // now add the brick component 
     Brick* brick = obj->AddComponent<Brick>();
     brick->isSolid = isSolid;
+
+    // once created, add it to he list of gameObjects 
+    AddGameObject( obj );
 
     return obj;
 }

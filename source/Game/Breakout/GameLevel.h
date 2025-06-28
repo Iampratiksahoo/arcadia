@@ -1,7 +1,7 @@
 #pragma once
 #include <Engine/Core.h>
 
-class GameLevel 
+class GameLevel : public Scene 
 {
 public:
     void Load(const char* lFile, uint levelWidth, uint levelHeight); 

@@ -2,14 +2,13 @@
 #include "GameLevel.h"
 #include "Ball.h"
 #include "Brick.h"
+#include "Paddle.h"
 
 Breakout::Breakout()
 {
     m_paddleSize = Vector2<float>(100.f, 20.f);
-    m_paddleVelocity = 500.f; 
 
     m_ballRadius = 10.f; 
-    m_ballVelocity = 350.f;
 }
 
 Breakout::~Breakout()
@@ -59,17 +58,19 @@ void Breakout::Init()
     GameLevel* five = new GameLevel();     
     five->Load("resources/breakout/level/level_005.level", windowWidth, windowHeight / 2);
 
-
     m_levels.push_back(one);
     m_levels.push_back(two);
     m_levels.push_back(three);
     m_levels.push_back(four);
     m_levels.push_back(five);
 
-    m_currentLevel = 2;
+    SetCurrentLevel(2);
+
+    AC_NOTICE("Breakout::Init() Creating Background Object");
 
     // construct the bg gameObject
     m_background = new GameObject();
+    m_background->name = "Breakout BG";
     m_background->transform->SetPosition( Vector3<float>::Zero );
 
     SpriteRenderer* renderer = m_background->AddComponent<SpriteRenderer>();
@@ -77,8 +78,11 @@ void Breakout::Init()
     renderer->texture = &ResourceManager::GetTexture2D("bg");
     renderer->SetSize(windowWidth, windowHeight);
 
+    AC_NOTICE("Breakout::Init() Creating Paddle Object");
+
     // now construct the paddle gameObject 
     m_paddle = new GameObject(); 
+    m_paddle->name = "Paddle";
     m_paddle->transform->SetPosition( Vector3<float>(
         windowWidth / 2.f - m_paddleSize.x / 2.f, 
         windowHeight - m_paddleSize.y, 
@@ -90,8 +94,16 @@ void Breakout::Init()
     paddleRenderer->texture = &ResourceManager::GetTexture2D("paddle");
     paddleRenderer->SetSize( m_paddleSize );
 
+    Paddle* paddle = m_paddle->AddComponent<Paddle>();
+    paddle->SetGameInstance( this );
+    paddle->size = m_paddleSize; 
+    
+
+    AC_NOTICE("Breakout::Init() Creating Ball Object");
+
     // now add the ball 
     m_ball = new GameObject(); 
+    m_ball->name = "Ball";
 
     Vector3<float> ballPos (
         m_paddle->transform->GetPosition().x + (m_paddleSize.x / 2.f) - m_ballRadius , 
@@ -111,77 +123,39 @@ void Breakout::Init()
     ball->SetRadius(m_ballRadius);
     ball->isStuck = true;
 
+    AC_NOTICE("Breakout::Init() Setting the ball's parent to be the paddle");
+
+    if (!m_ball || !m_ball->transform) {
+    AC_ERROR("Breakout::Init() m_ball or its transform is NULL!");
+    }
+
+    if (!m_paddle || !m_paddle->transform) {
+        AC_ERROR("Breakout::Init() m_paddle or its transform is NULL!");
+    }
+
     m_ball->transform->SetParent( m_paddle->transform );
-}
 
-// Update the game state
-void Breakout::Update(float deltaTime)
-{
-    int windowWidth = getWindowWidth();
-    Vector3<float> translation;
-    
-    if(Input::GetKey(KeyCode::A)
-        && m_paddle->transform->GetPosition().x > 0 )
-    {
-        translation = Vector3<float>::Left;
-    }
-    if(Input::GetKey(KeyCode::D)
-        && m_paddle->transform->GetPosition().x < windowWidth - m_paddleSize.x)
-    {;
-        translation = Vector3<float>::Right;
-    }
-    if(Input::GetKeyDown(KeyCode::SPACE))
-    {
-        if(m_ball->transform->GetParent() != nullptr)
-        {
-            m_ball->transform->SetParent(nullptr);
-            m_ball->GetComponent<Ball>()->isStuck = false;
-        }
-    }
-    
-    m_paddle->transform->Translate( translation * m_paddleVelocity * deltaTime );
-}
+    // once all the elements are created, now add them to the current active scene to be rendered
+    GetCurrentLevel()->AddGameObject( m_background );
+    GetCurrentLevel()->AddGameObject( m_ball );
+    GetCurrentLevel()->AddGameObject( m_paddle );
 
-void Breakout::FixedUpdate(float fixedDeltaTime)
-{
-    m_ball->GetComponent<Ball>()->Move(
-        fixedDeltaTime, 
-        m_ballVelocity, 
-        getWindowWidth(), 
-        getWindowHeight()
-    );
-}
-
-// Render the game
-void Breakout::Render()
-{
-    // first draw the background 
-    m_background->Render();
-
-    // then draw the level bricks 
-    GetCurrentLevel()->Render();
-
-    // now render the ball 
-    m_ball->Render();
-
-    // now render the paddle 
-    m_paddle->Render();
+    // move the bg to be the first thing to render, as it needs to be behind everything
+    GetCurrentLevel()->MoveGameObjectToIndex( m_background, 0 );
 }
 
 // Clean up resources
 void Breakout::Cleanup()
 {
-    for(GameLevel* level : m_levels)
-    {
-        delete level; 
-    }
-
-    delete m_background; 
-    delete m_paddle; 
-    delete m_ball; 
 }
 
 GameLevel *Breakout::GetCurrentLevel() const
 {
-    return m_levels[m_currentLevel - 1];
+    return m_levels[m_currentLevel];
+}
+
+void Breakout::SetCurrentLevel(int level)
+{
+    m_currentLevel = level - 1; 
+    SceneManager::SetActiveScene( GetCurrentLevel() );
 }
