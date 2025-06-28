@@ -7,7 +7,20 @@ class Transform;
 class AbstractComponent
 {
 public:
-    virtual void Reset() = 0; 
+    /// @brief Called when the game actually starts
+    virtual void OnGameStart() { }
+
+    /// @brief Called when the active state of the component is changed
+    virtual void OnActiveStateChange(bool active) { }
+
+    /// @brief Called every frame
+    virtual void Update(float deltaTime) { }
+
+    /// @brief Called once per fixed frame time, best for collision and physics calculation
+    virtual void FixedUpdate(float fixedDeltaTime) { }
+
+    /// @brief Never called, explicitly need to call this 
+    virtual void Reset() { }
 
 public:
     GameObject* gameObject; 

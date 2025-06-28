@@ -15,9 +15,8 @@
 class GameObject
 {
 public:
-    GameObject();
-
-    virtual void Render();
+    GameObject(); 
+    ~GameObject(); 
 
 #pragma region TEMPLATES
     /// @brief True's if AbstractBaseComponent attached on the GameObject 
@@ -119,13 +118,46 @@ public:
         addComponentImpl( component );
     }
 
+    template <typename T>
+    void RemoveComponent()
+    {
+        static_assert(std::is_base_of<AbstractComponent, T>::value,
+                    "GameObject::RemoveComponent only works with types derived from AbstractComponent");
+
+        for (auto it = m_components.begin(); it != m_components.end(); ++it)
+        {
+            if (T* casted = dynamic_cast<T*>(*it))
+            {
+                if (casted == transform)
+                {
+                    AC_ERROR("GameObject::Cannot remove Transform component");
+                    return;
+                }
+
+                delete *it;
+                m_components.erase(it);
+                return;
+            }
+        }
+
+        AC_WARN("GameObject::RemoveComponent called, but component of type %s not found", typeid(T).name());
+    }
+
+
     inline const std::string& GetUuid() const { return m_uuid; }
 
     inline bool IsActive() const { return m_isActive; }
-    inline void SetActive(bool isActive) { m_isActive = isActive; };
+    void SetActive(bool isActive);
 #pragma endregion
 
 private: 
+    friend class Scene; 
+
+    void gameStart();
+    void update(float deltaTime);
+    void fixedUpdate(float fixedDeltaTime);
+    void render();
+    
     void addComponentImpl( AbstractComponent* component );
 
 public: 

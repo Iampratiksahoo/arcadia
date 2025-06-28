@@ -22,7 +22,51 @@ GameObject::GameObject() :
     addComponentImpl( transform );
 }
 
-void GameObject::Render()
+GameObject::~GameObject()
+{
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            delete component; 
+        }
+    }
+}
+
+void GameObject::gameStart()
+{
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            component->OnGameStart();
+        }
+    }
+}
+
+void GameObject::update(float deltaTime)
+{
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            component->Update( deltaTime );
+        }
+    }
+}
+
+void GameObject::fixedUpdate(float fixedDeltaTime)
+{
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            component->FixedUpdate( fixedDeltaTime );
+        }
+    }
+}
+
+void GameObject::render()
 {
     // if the object is active and needs rendering 
     // if there is a valid renderer 
@@ -31,6 +75,19 @@ void GameObject::Render()
         if(SpriteRenderer* renderer = GetComponent<SpriteRenderer>())
         {
             renderer->Render();
+        }
+    }
+}
+
+void GameObject::SetActive(bool isActive)
+{
+    m_isActive = isActive; 
+
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            component->OnActiveStateChange( m_isActive );
         }
     }
 }

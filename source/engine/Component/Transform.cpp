@@ -33,20 +33,23 @@ Transform* Transform::GetParent()
 
 void Transform::SetParent(Transform* parent)
 {
-    if (m_parent)
+    if( parent != this )
     {
-        auto& siblings = m_parent->m_children;
-        siblings.erase(std::remove(siblings.begin(), siblings.end(), this), siblings.end());
+        if ( m_parent != nullptr )
+        {
+            auto& siblings = m_parent->m_children;
+            siblings.erase(std::remove(siblings.begin(), siblings.end(), this), siblings.end());
+        }
+    
+        m_parent = parent;
+    
+        if ( m_parent != nullptr )
+        {
+            m_parent->m_children.push_back(this);
+        }
+    
+        updateLocalParams();
     }
-
-    m_parent = parent;
-
-    if (m_parent)
-    {
-        m_parent->m_children.push_back(this);
-    }
-
-    updateLocalParams();
 }
 
 Vector3<float> Transform::GetPosition() { return m_position; }

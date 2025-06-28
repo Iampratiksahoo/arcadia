@@ -7,5 +7,7 @@
 #include "GameObject.h"
 #include "Texture2D.h"
 #include "Shader.h"
+#include "Scene/Scene.h"
+#include "Scene/SceneManager.h"
 
 #endif

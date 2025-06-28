@@ -7,10 +7,9 @@ class Engine
         Engine(class AbstractGameBase* game);
         ~Engine();
 
-    protected:
-        void ClearScreen();
-
     private:
+        void clearScreen();
+        
         static void framebufferSizeCallback(struct GLFWwindow* window, int width, int height);
         static void keyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods);
         static void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos); 

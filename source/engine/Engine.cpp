@@ -20,7 +20,10 @@
 
 Engine::Engine(AbstractGameBase* game) : 
 m_game(game),
-m_window(nullptr)
+m_window(nullptr), 
+m_fixedDeltaTimeAccum(0.0f), 
+m_lastFrameTime(0.0f),       
+m_deltaTime(0.0f)            
 {
     // set the width and height 
     m_width = WINDOW_WIDTH;
@@ -46,7 +49,7 @@ m_window(nullptr)
         // create a window 
         if (m_window = glfwCreateWindow(m_width, m_height, m_title, nullptr, nullptr)) 
         {
-            AC_LOG("Engine::Window initialized"); 
+            AC_LOG("Engine::Ctor() Window initialized"); 
 
             // set the user pointer for later usage
             glfwSetWindowUserPointer( m_window, this );
@@ -56,7 +59,7 @@ m_window(nullptr)
 
             if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
             {
-                AC_LOG("Engine::Loaded GLAD successfully"); 
+                AC_LOG("Engine::Ctor() Loaded GLAD successfully"); 
 
                 // set the callback for key input
                 glfwSetKeyCallback(m_window, keyCallback);
@@ -82,6 +85,9 @@ m_window(nullptr)
 
                 // ok now everything is setup, we can initialize the game
                 m_game->Init();
+
+                // once the game has been initialize, we officially start the game 
+                SceneManager::gameStart(); 
             }
             else
             {
@@ -95,7 +101,7 @@ m_window(nullptr)
     }
     catch (std::exception e)
     {
-        AC_ERROR("Engine::Failed to create window with error: %s", e.what());   
+        AC_ERROR("Engine::Ctor() Failed to create window with error: %s", e.what());   
         glfwTerminate();
         exit(-1);
     }
@@ -119,19 +125,19 @@ m_window(nullptr)
         glfwPollEvents();
 
         // update the game state
-        m_game->Update( m_deltaTime );
+        SceneManager::update( m_deltaTime ); 
 
         while (m_fixedDeltaTimeAccum >= FIXED_DELTA_TIME )
         {
-            m_game->FixedUpdate( FIXED_DELTA_TIME );
+            SceneManager::fixedUpdate( FIXED_DELTA_TIME );
             m_fixedDeltaTimeAccum -= FIXED_DELTA_TIME; 
         }
 
         // clear the scree
-        ClearScreen();
+        clearScreen();
 
-        // render the game
-        m_game->Render();
+        // Ask the scene manager to render all scenes 
+        SceneManager::render();
 
         // finally, swap buffers and poll events
         glfwSwapBuffers( m_window );
@@ -140,6 +146,7 @@ m_window(nullptr)
     // once the game is done running, preform a cleanup 
     // this needs to happen here, before the destructor kicks in 
     m_game->Cleanup();
+    SceneManager::cleanup();
 }
 
 Engine::~Engine()
@@ -155,7 +162,7 @@ Engine::~Engine()
     }
 }
 
-void Engine::ClearScreen()
+void Engine::clearScreen()
 {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT);
