@@ -122,6 +122,10 @@ GameObject* GameLevel::constructBrick(Vector3<float> position, Vector2<float> si
     Brick* brick = obj->AddComponent<Brick>();
     brick->isSolid = isSolid;
 
+    // also add a boxCollider
+    BoxCollider2D* boxCollider = obj->AddComponent<BoxCollider2D>();
+    boxCollider->size = renderer->GetSize();
+
     // once created, add it to he list of gameObjects 
     AddGameObject( obj );
 

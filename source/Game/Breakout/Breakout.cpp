@@ -97,6 +97,9 @@ void Breakout::Init()
     Paddle* paddle = m_paddle->AddComponent<Paddle>();
     paddle->SetGameInstance( this );
     paddle->size = m_paddleSize; 
+
+    BoxCollider2D* boxCollider = m_paddle->AddComponent<BoxCollider2D>();
+    boxCollider->size = m_paddleSize; 
     
 
     AC_NOTICE("Breakout::Init() Creating Ball Object");
@@ -122,6 +125,10 @@ void Breakout::Init()
     ball->SetGameInstance(this);
     ball->SetRadius(m_ballRadius);
     ball->isStuck = true;
+
+    // now add a circle collider to the ball 
+    CircleCollider2D* circleCollider = m_ball->AddComponent<CircleCollider2D>();
+    circleCollider->radius = m_ballRadius; 
 
     AC_NOTICE("Breakout::Init() Setting the ball's parent to be the paddle");
 
@@ -157,5 +164,5 @@ GameLevel *Breakout::GetCurrentLevel() const
 void Breakout::SetCurrentLevel(int level)
 {
     m_currentLevel = level - 1; 
-    SceneManager::SetActiveScene( GetCurrentLevel() );
+    SceneManager::GetInstance()->SetActiveScene( GetCurrentLevel() );
 }

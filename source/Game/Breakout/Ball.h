@@ -6,6 +6,7 @@ public:
     Ball();
     void Update(float deltaTime) override;  
     void FixedUpdate(float fixedDeltaTime) override; 
+    void OnCollisionEnter(AbstractCollider* other) override; 
 
     void SetRadius(float radius);
     inline float GetRadius() const { return m_radius; }
@@ -15,7 +16,6 @@ public:
     inline void SetGameInstance( class Breakout* instance) { m_gameInstance = instance; }
     
 private:
-    bool checkCollision(GameObject* other) const;
     Vector3<float> reflect (Vector3<float> direction, Vector3<float> normal);
     Vector3<float> getCollisionNormal( GameObject* other) const;
 

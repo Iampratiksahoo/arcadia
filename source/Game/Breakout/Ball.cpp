@@ -18,7 +18,7 @@ void Ball::Update(float deltaTime)
             transform->SetParent(nullptr);
             isStuck = false;
         }
-    }   
+    }
 }
 
 void Ball::FixedUpdate(float fixedDeltaTime)
@@ -41,32 +41,6 @@ void Ball::FixedUpdate(float fixedDeltaTime)
             m_moveDirection.y = -1.f;
         }
 
-        // now check for collision with bricks 
-        for(GameObject* brickObj : m_gameInstance->GetCurrentLevel()->GetBricks() )
-        {
-            Brick* brick = brickObj->GetComponent<Brick>();
-
-            // change the direction, only if the object is not destroyed this frame
-            if(brickObj->IsActive())
-            {
-                if( checkCollision( brickObj ) )
-                {
-                    // now change the direction of the
-                    m_moveDirection = reflect(m_moveDirection, getCollisionNormal( brickObj ));
-
-                    // handle the collision with ball for the brick 
-                    brick->CollidedWithBall();
-                }
-            }
-        }
-
-        // now check the collision with paddle 
-        if( checkCollision( m_gameInstance->GetPaddle() ))
-        {
-            // now change the direction of the
-            m_moveDirection = reflect(m_moveDirection, getCollisionNormal( m_gameInstance->GetPaddle() )); 
-        }   
-
         Vector3<float> translation = m_moveDirection * -m_velocity * fixedDeltaTime;
 
         // move the ball
@@ -74,41 +48,26 @@ void Ball::FixedUpdate(float fixedDeltaTime)
     }
 }
 
-bool Ball::checkCollision(GameObject *other) const
+void Ball::OnCollisionEnter(AbstractCollider *other)
 {
-    Transform* ballT = gameObject->transform;
-    SpriteRenderer* ballSR = gameObject->GetComponent<SpriteRenderer>();
-
-    Transform* otherT = other->transform;
-    SpriteRenderer* otherSR = other->GetComponent<SpriteRenderer>();
-
-    // Ball center position
-    Vector2<float> ballCenter(
-        ballT->GetPosition().x + m_radius,
-        ballT->GetPosition().y + m_radius
-    );
-
-    // AABB center position and half extents
-    Vector2<float> aabbHalfExtents = otherSR->GetSize() / 2.0f;
-    Vector2<float> aabbCenter(
-        otherT->GetPosition().x + aabbHalfExtents.x,
-        otherT->GetPosition().y + aabbHalfExtents.y
-    );
-
-    // Calculate difference vector between both centers
-    Vector2<float> difference = ballCenter - aabbCenter;
-
-    // Clamp to AABB extents
-    Vector2<float> clamped = Vector2<float>::Clamp(difference, -aabbHalfExtents, aabbHalfExtents);
-
-    // Closest point on AABB to the ball
-    Vector2<float> closest = aabbCenter + clamped;
-
-    // Vector between circle center and closest point
-    Vector2<float> distanceVec = closest - ballCenter;
-
-    // Check if within m_radius (circle vs AABB)
-    return distanceVec.SquareMagnitude() < m_radius * m_radius;
+    if(!isStuck)
+    {
+        if(Brick* brick = other->gameObject->GetComponent<Brick>())
+        {
+            // now change the direction of the ball
+            m_moveDirection = reflect(m_moveDirection, getCollisionNormal( other->gameObject ));
+    
+            // handle collision for the ball
+            brick->CollidedWithBall();
+        }
+    
+        // now check the collision with paddle 
+        if( other->gameObject ==  m_gameInstance->GetPaddle() )
+        {
+            // now change the direction of the
+            m_moveDirection = reflect(m_moveDirection, getCollisionNormal( m_gameInstance->GetPaddle() )); 
+        }   
+    }
 }
 
 Vector3<float> Ball::reflect(Vector3<float> direction, Vector3<float> normal)
