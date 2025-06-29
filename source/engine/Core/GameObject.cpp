@@ -1,9 +1,5 @@
 #include "GameObject.h"
 
-#include "Engine/Component/Transform.h"
-#include "Engine/Component/AbstractComponent.h"
-#include "Engine/Component/SpriteRenderer.h"
-
 #include "Engine/Util/UUID.h"
 
 GameObject::GameObject() : 
@@ -66,6 +62,17 @@ void GameObject::fixedUpdate(float fixedDeltaTime)
     }
 }
 
+void GameObject::onCollisionEnter(AbstractCollider *other)
+{
+    for( AbstractComponent* component : m_components )
+    {
+        if(component != nullptr)
+        {
+            component->OnCollisionEnter( other );
+        }
+    }
+}
+
 void GameObject::render()
 {
     // if the object is active and needs rendering 
@@ -108,6 +115,12 @@ void GameObject::addComponentImpl(AbstractComponent *component)
         {
             // Otherwise, get the existing Transform from this GameObject
             component->transform = GetComponent<Transform>();
+        }
+
+        // if component IS-A AbstractCollider, the register it to the CollisionManager
+        if(AbstractCollider* asCollider = dynamic_cast<AbstractCollider*>(component))
+        {
+            CollisionManager::GetInstance()->addCollider( asCollider );
         }
 
         // add to the list of components

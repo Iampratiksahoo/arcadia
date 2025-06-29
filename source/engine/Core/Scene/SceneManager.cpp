@@ -1,10 +1,6 @@
 #include "SceneManager.h"
 #include "Engine/Util/Core.h"
 
-std::unordered_set<std::string> SceneManager::m_sceneUUIDs;
-std::vector<Scene*> SceneManager::m_scenes;
-Scene* SceneManager::m_activeScene = nullptr; 
-
 void SceneManager::SetActiveScene(Scene *scene)
 {
     if(scene != nullptr)

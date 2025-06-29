@@ -1,6 +1,8 @@
 #ifndef ABSTRACTCOMPONENT_H
 #define ABSTRACTCOMPONENT_H
 
+#include <string>
+#include "Engine/Util/UUID.h"
 
 class GameObject;
 class Transform; 
@@ -19,16 +21,26 @@ public:
     /// @brief Called once per fixed frame time, best for collision and physics calculation
     virtual void FixedUpdate(float fixedDeltaTime) { }
 
+    /// @brief Called when the GameObject is collided with another collider
+    virtual void OnCollisionEnter( class AbstractCollider* other ) { }
+
     /// @brief Never called, explicitly need to call this 
     virtual void Reset() { }
 
+    /// @brief Get UUID unique to this component  
+    inline const std::string& GetUuid() const { return m_uuid; };
+
 protected:
     friend GameObject;
+    AbstractComponent() : m_uuid( UUID::GenerateUUID() ) {  }
     ~AbstractComponent() = default; 
 
 public:
     GameObject* gameObject; 
     Transform* transform; 
+
+private:
+    std::string m_uuid; 
 };
 
 #endif

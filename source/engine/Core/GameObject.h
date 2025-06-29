@@ -9,8 +9,7 @@
 #include <vector>
 #include <string> 
 
-#include "Engine/Component/AbstractComponent.h"
-#include "Engine/Component/Transform.h"
+#include "Engine/Component/Core.h"
 
 class GameObject
 {
@@ -133,6 +132,13 @@ public:
                     return;
                 }
 
+                // if component IS-A AbstractCollider, the register it to the CollisionManager
+                if(AbstractCollider* asCollider = dynamic_cast<AbstractCollider*>(casted))
+                {
+                    CollisionManager::GetInstance()->removeCollider( asCollider );
+                }
+
+                // finally delete it 
                 delete *it;
                 m_components.erase(it);
                 return;
@@ -151,6 +157,7 @@ public:
 
 protected:
     friend class Scene; 
+    friend class CollisionManager;
 
     ~GameObject(); 
 
@@ -158,6 +165,7 @@ private:
     void gameStart();
     void update(float deltaTime);
     void fixedUpdate(float fixedDeltaTime);
+    void onCollisionEnter(class AbstractCollider* other);
     void render();
     
     void addComponentImpl( AbstractComponent* component );

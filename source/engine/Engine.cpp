@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "AbstractSystemManager.h"
+
 #define OPENGL_VERSION_MAJOR 3
 #define OPENGL_VERSION_MINOR 3
 
@@ -53,6 +55,9 @@ m_deltaTime(0.0f)
     // set the screen width and height for the game 
     m_game->m_windowWidth = m_width; 
     m_game->m_windowHeight = m_height;
+
+    // add all the systems managers 
+    addSystemManagers();
 
     // first initialize GLFW to use OpenGL
     glfwInit();
@@ -107,7 +112,11 @@ m_deltaTime(0.0f)
                 m_game->Init();
 
                 // once the game has been initialize, we officially start the game 
-                SceneManager::gameStart(); 
+                // so call gameStart for all the systemManagers as well.
+                for(AbstractSystemManager* manager : m_systemManagers)
+                {
+                    manager->gameStart();
+                }
             }
             else
             {
@@ -144,20 +153,30 @@ m_deltaTime(0.0f)
         // poll glfw window events
         glfwPollEvents();
 
-        // update the game state
-        SceneManager::update( m_deltaTime ); 
+        // update all the systems manager 
+        for(AbstractSystemManager* manager : m_systemManagers)
+        {
+            manager->update( m_deltaTime );
+        }
 
         while (m_fixedDeltaTimeAccum >= m_fixedDeltaTime )
         {
-            SceneManager::fixedUpdate( m_fixedDeltaTime );
+            // send fixed update to all the systems managers 
+            for(AbstractSystemManager* manager : m_systemManagers)
+            {
+                manager->fixedUpdate( m_fixedDeltaTime );
+            }
             m_fixedDeltaTimeAccum -= m_fixedDeltaTime; 
         }
 
         // clear the scree
         clearScreen();
 
-        // Ask the scene manager to render all scenes 
-        SceneManager::render();
+        // Ask the system manager to render all 
+        for(AbstractSystemManager* manager : m_systemManagers)
+        {
+            manager->render();
+        }
 
         // finally, swap buffers and poll events
         glfwSwapBuffers( m_window );
@@ -166,7 +185,12 @@ m_deltaTime(0.0f)
     // once the game is done running, preform a cleanup 
     // this needs to happen here, before the destructor kicks in 
     m_game->Cleanup();
-    SceneManager::cleanup();
+
+    // now cleanup the engine system managers 
+    for(AbstractSystemManager* manager : m_systemManagers)
+    {
+        manager->cleanup();
+    }
 }
 
 Engine::~Engine()
@@ -180,6 +204,12 @@ Engine::~Engine()
         glfwDestroyWindow( m_window );
         glfwTerminate();
     }
+}
+
+void Engine::addSystemManagers()
+{
+    m_systemManagers.push_back( static_cast<AbstractSystemManager*>(SceneManager::GetInstance()));
+    m_systemManagers.push_back( static_cast<AbstractSystemManager*>(CollisionManager::GetInstance()));
 }
 
 void Engine::clearScreen()

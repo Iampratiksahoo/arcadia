@@ -79,12 +79,12 @@ public:
              + y * other.y;
     }
 
-    Vector2<T> operator*(const float& s)
+    Vector2<T> operator*(const float& s) const
     {
         return Vector2<T>(x * s, y * s);
     }
  
-    Vector2<T> operator/(const float& s)
+    Vector2<T> operator/(const float& s) const
     {
         if (s == 0.0f)
             throw std::runtime_error("Division by zero in Vector2");
@@ -92,24 +92,24 @@ public:
         return *this * (1 / s);
     }
 
-    Vector2<T> operator+(const Vector2<T>& vec)
+    Vector2<T> operator+(const Vector2<T>& vec) const
     {
         return Vector2<T>(x + vec.x, y + vec.y);
     }
 
-    Vector2<T> operator-(const Vector2<T>& vec)
+    Vector2<T> operator-(const Vector2<T>& vec) const
     {
         return Vector2<T>(x - vec.x, y - vec.y);
     }
 
-    Vector2<T> operator*( const Vector2<T>& vec ) {
+    Vector2<T> operator*( const Vector2<T>& vec ) const {
         return Vector2<T>(
             x * vec.x,
             y * vec.y
         );
     }
 
-    Vector2<T> operator/( const Vector2<T>& vector ) {
+    Vector2<T> operator/( const Vector2<T>& vector ) const {
         return Vector2<T>(
             x / vector.x,
             y / vector.y
@@ -117,7 +117,7 @@ public:
     }
 
     template <typename U>
-    Vector2<T> operator+(const U& v)
+    Vector2<T> operator+(const U& v) const
     {
         static_assert(std::is_same<U, int>::value
             || std::is_same<U, float>::value
@@ -127,7 +127,7 @@ public:
     }
 
     template <typename U>
-    Vector2<T> operator-(const U& v)
+    Vector2<T> operator-(const U& v) const
     {
         return *this + (v * (U)-1);
     }

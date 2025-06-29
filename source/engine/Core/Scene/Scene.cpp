@@ -6,7 +6,7 @@
 Scene::Scene() : 
     m_uuid( UUID::GenerateUUID() )
 {
-    SceneManager::addScene( this );
+    SceneManager::GetInstance()->addScene( this );
 }
 
 Scene::~Scene()

@@ -1,6 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "vector"
+
 class Engine
 {
     public: 
@@ -8,17 +10,19 @@ class Engine
         ~Engine();
 
     private:
+        void addSystemManagers();
         void clearScreen();
         
         static void framebufferSizeCallback(struct GLFWwindow* window, int width, int height);
         static void keyCallback(struct GLFWwindow* window, int key, int scancode, int action, int mods);
         static void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos); 
         static void cursorEnterCallback(GLFWwindow* window, int entered);
-        static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-
+        static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods); 
     private:
         class AbstractGameBase* m_game;
         struct GLFWwindow* m_window;
+
+        std::vector<class AbstractSystemManager*> m_systemManagers;
 
         int m_width;
         int m_height;

@@ -5,30 +5,30 @@
 #include "string"
 #include "unordered_set"
 #include "Scene.h"
+#include "Engine/AbstractSystemManager.h"
 
-class SceneManager
+class SceneManager : public AbstractSystemManager,  public SingletonBase<SceneManager> 
 {
 public: 
-    static void SetActiveScene( Scene* scene );
-    static Scene* GetActiveScene(); 
+    SceneManager() = default; 
+    void SetActiveScene( Scene* scene );
+    Scene* GetActiveScene(); 
 
 private: 
     friend class Engine; 
     friend class Scene; 
 
-    SceneManager() = default; 
+    void gameStart() override;
+    void update(float deltaTime) override;
+    void fixedUpdate(float fixedDeltaTime) override;
+    void render() override;
+    void cleanup() override;
 
-    static void gameStart();
-    static void update(float deltaTime);
-    static void fixedUpdate(float fixedDeltaTime);
-    static void render();
-    static void cleanup();
+    void addScene( Scene* scene );
 
-    static void addScene( Scene* scene );
-
-    static std::unordered_set<std::string> m_sceneUUIDs;
-    static std::vector<Scene*> m_scenes;
-    static Scene* m_activeScene; 
+    std::unordered_set<std::string> m_sceneUUIDs;
+    std::vector<Scene*> m_scenes;
+    Scene* m_activeScene; 
 }; 
 
 #endif // SCENEMANAGER_H

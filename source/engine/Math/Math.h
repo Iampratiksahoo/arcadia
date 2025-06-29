@@ -1,6 +1,9 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <algorithm> 
+#include <cmath>      
+
 class Math
 {
 public:
