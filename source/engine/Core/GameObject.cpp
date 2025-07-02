@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Scene/SceneManager.h"
 
 #include "Engine/Util/UUID.h"
 
@@ -13,6 +14,9 @@ GameObject::GameObject() :
 
     // set the object as active in the ctor
     m_isActive = true;
+
+    // add this to the current scene 
+    SceneManager::GetInstance()->GetActiveScene()->AddGameObject( this );
 
     // add it to the list of components 
     addComponentImpl( transform );

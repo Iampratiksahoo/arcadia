@@ -67,7 +67,7 @@ m_deltaTime(0.0f)
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    // glfwWindowHint(GLFW_RESIZABLE, false);
+    glfwWindowHint(GLFW_RESIZABLE, m_resizable);
 
     try
     {
