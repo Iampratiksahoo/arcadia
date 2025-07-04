@@ -1,7 +1,10 @@
 #include "Scene.h"
+#include "Engine/Component/SpriteRenderer.h"
 #include "Engine/Core/GameObject.h"
 #include "Engine/Util/UUID.h"
 #include "SceneManager.h"
+#include <algorithm>
+#include <vector>
 
 Scene::Scene() : 
     m_uuid( UUID::GenerateUUID() )
@@ -55,6 +58,23 @@ void Scene::fixedUpdate(float fixedDeltaTime)
 
 void Scene::render()
 {
+    std::sort(
+        m_gameObjects.begin(), 
+        m_gameObjects.end(), 
+        [](GameObject* a, GameObject* b)
+        {
+            bool sort = false;
+            if(SpriteRenderer* sra = a->GetComponent<SpriteRenderer>())
+            {
+                if(SpriteRenderer* srb = b->GetComponent<SpriteRenderer>())
+                {
+                    sort = sra->orderInLayer < srb->orderInLayer; 
+                }
+            }
+            return  sort;
+        }
+    );
+
     for(GameObject* gameObject : m_gameObjects)
     {
         if(gameObject != nullptr)

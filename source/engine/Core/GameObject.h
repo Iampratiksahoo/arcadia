@@ -1,6 +1,9 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
+#include "Engine/Component/Collider/CollisionManager.h"
+#include "Engine/Component/SpriteRenderer.h"
+#include "Engine/Component/Transform.h"
 #include "Engine/Util/Log.h"
 
 #include <assert.h>
@@ -8,8 +11,6 @@
 #include <typeinfo>
 #include <vector>
 #include <string> 
-
-#include "Engine/Component/Core.h"
 
 class GameObject
 {
@@ -29,7 +30,7 @@ public:
         
         bool hasComponent = false;
 
-        for (auto* component : m_components)
+        for (AbstractComponent* component : m_components)
         {
             if (dynamic_cast<T*>(component))
             {

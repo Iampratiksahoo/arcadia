@@ -4,6 +4,8 @@
 #include <algorithm> 
 #include <cmath>      
 
+#define MATH_PI (float) 22 / 7
+
 class Math
 {
 public:
@@ -25,6 +27,16 @@ public:
     static float Max( float value1, float value2 )
     {
         return std::max( value1, value2 );
+    }
+
+    static float DegToRad(float deg)
+    {
+        return deg * (MATH_PI / 180.f);
+    }
+
+    static float RadToDeg(float rad)
+    {
+        return rad * (180.f / MATH_PI);
     }
 };
 

@@ -180,32 +180,32 @@ public:
         );
     }
 #pragma region STATICS
-    static const Vector2<T> Zero;
-    static const Vector2<T> One;
-    static const Vector2<T> Up;
-    static const Vector2<T> Down;
-    static const Vector2<T> Left;
-    static const Vector2<T> Right;
+    static Vector2<T> Zero;
+    static Vector2<T> One;
+    static Vector2<T> Up;
+    static Vector2<T> Down;
+    static Vector2<T> Left;
+    static Vector2<T> Right;
 #pragma endregion
 };
 
 // Static member definitions
 template<typename T>
-const Vector2<T> Vector2<T>::Zero = Vector2<T>(0);
+Vector2<T> Vector2<T>::Zero = Vector2<T>(0);
 
 template<typename T>
-const Vector2<T> Vector2<T>::One = Vector2<T>(1);
+Vector2<T> Vector2<T>::One = Vector2<T>(1);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Up = Vector2<T>(0, 1);
+Vector2<T> Vector2<T>::Up = Vector2<T>(0, 1);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Down = Vector2<T>(0, -1);
+Vector2<T> Vector2<T>::Down = Vector2<T>(0, -1);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Left = Vector2<T>(-1, 0);
+Vector2<T> Vector2<T>::Left = Vector2<T>(-1, 0);
 
 template<typename T>
-const Vector2<T> Vector2<T>::Right = Vector2<T>(1, 0);
+Vector2<T> Vector2<T>::Right = Vector2<T>(1, 0);
 
 #endif

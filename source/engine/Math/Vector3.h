@@ -186,40 +186,40 @@ public:
         );
     }
 #pragma region STATICS
-    static const Vector3<T> Zero;
-    static const Vector3<T> One;
-    static const Vector3<T> Up;
-    static const Vector3<T> Down;
-    static const Vector3<T> Left;
-    static const Vector3<T> Right;
-    static const Vector3<T> Forward;
-    static const Vector3<T> Backward;
+    static Vector3<T> Zero;
+    static Vector3<T> One;
+    static Vector3<T> Up;
+    static Vector3<T> Down;
+    static Vector3<T> Left;
+    static Vector3<T> Right;
+    static Vector3<T> Forward;
+    static Vector3<T> Backward;
 #pragma endregion
 };
 
 // Static member definitions
 template<typename T>
-const Vector3<T> Vector3<T>::Zero = Vector3<T>(0);
+Vector3<T> Vector3<T>::Zero = Vector3<T>(0);
 
 template<typename T>
-const Vector3<T> Vector3<T>::One = Vector3<T>(1);
+Vector3<T> Vector3<T>::One = Vector3<T>(1);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Up = Vector3<T>(0, 1, 0);
+Vector3<T> Vector3<T>::Up = Vector3<T>(0, 1, 0);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Down = Vector3<T>(0, -1, 0);
+Vector3<T> Vector3<T>::Down = Vector3<T>(0, -1, 0);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Left = Vector3<T>(-1, 0, 0);
+Vector3<T> Vector3<T>::Left = Vector3<T>(-1, 0, 0);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Right = Vector3<T>(1, 0, 0);
+Vector3<T> Vector3<T>::Right = Vector3<T>(1, 0, 0);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Forward = Vector3<T>(0, 0, 1);
+Vector3<T> Vector3<T>::Forward = Vector3<T>(0, 0, 1);
 
 template<typename T>
-const Vector3<T> Vector3<T>::Backward = Vector3<T>(0, 0, -1);
+Vector3<T> Vector3<T>::Backward = Vector3<T>(0, 0, -1);
 
 #endif

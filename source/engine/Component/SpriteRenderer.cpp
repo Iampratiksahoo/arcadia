@@ -1,6 +1,5 @@
 #include "SpriteRenderer.h"
 #include "Engine/Core/GameObject.h"
-#include "Engine/Util/Log.h"
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -14,6 +13,7 @@ SpriteRenderer::SpriteRenderer(Shader *shader, Texture2D* texture) :
     m_size(10.f),
     shader( shader ), 
     texture( texture ),
+    orderInLayer(0),
     color( Vector3<float>(1.f) )
 {
     // initialize (and configure) the quad's VAO (Vertex Array Object)
@@ -52,7 +52,8 @@ void SpriteRenderer::Render()
         // fetch/calculate the pre-requisites 
         Transform* transform = gameObject->transform;
         Vector3<float> position = transform->GetPosition();
-        float rotationInRadians = transform->GetRotation().Magnitude();
+        float rotationInDegrees = transform->GetRotation().Magnitude();
+        float rotationInRadians = Math::DegToRad( rotationInDegrees );
         Vector3<float> rotationAxis = transform->GetRotation().GetNormalized();
         Vector2<float> size = Vector2<float>( texture->width, texture->height );
         

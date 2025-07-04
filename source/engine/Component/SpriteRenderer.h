@@ -59,6 +59,7 @@ class SpriteRenderer : public AbstractComponent
         Shader* shader;
         Texture2D* texture;
         Vector3<float> color;
+        int orderInLayer; 
     private:
         unsigned int m_quadVAO;
 

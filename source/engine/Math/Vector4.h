@@ -197,16 +197,16 @@ public:
     }
     
 #pragma region STATICS
-    static const Vector4<T> Zero;
-    static const Vector4<T> One;
+    static Vector4<T> Zero;
+    static Vector4<T> One;
 #pragma endregion
 };
 
 // Static member definitions
 template<typename T>
-const Vector4<T> Vector4<T>::Zero = Vector4<T>(0);
+Vector4<T> Vector4<T>::Zero = Vector4<T>(0);
 
 template<typename T>
-const Vector4<T> Vector4<T>::One = Vector4<T>(1);
+Vector4<T> Vector4<T>::One = Vector4<T>(1);
 
 #endif
